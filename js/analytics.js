@@ -1,6 +1,6 @@
 /**
  * Analytics and Trends module for Boiler Lab
- * Построение графиков ВХР с поддержкой светлой и тёмной темы
+ * Построение высокотехнологичных графиков ВХР с поддержкой светлой и неоновой тёмной темы
  */
 
 let phChartInstance = null;
@@ -9,15 +9,18 @@ let hardnessChartInstance = null;
 let summaryPieChartInstance = null;
 
 const Analytics = {
-  // Получение актуальных цветов для Chart.js в зависимости от темы
   getThemeColors() {
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
     return {
-      textColor: isLight ? '#334155' : '#94a3b8',
-      legendColor: isLight ? '#0f172a' : '#e2e8f0',
-      gridColor: isLight ? 'rgba(0, 0, 0, 0.07)' : 'rgba(255, 255, 255, 0.07)',
-      pieBorder: isLight ? '#ffffff' : '#131d33',
-      pieBg: isLight ? '#f1f5f9' : '#0b1120'
+      isLight,
+      textColor: isLight ? '#475569' : '#94a3b8',
+      legendColor: isLight ? '#0f172a' : '#f1f5f9',
+      gridColor: isLight ? 'rgba(0, 0, 0, 0.06)' : 'rgba(56, 189, 248, 0.07)',
+      pieBorder: isLight ? '#ffffff' : '#0c1426',
+      feedColor: isLight ? '#0284c7' : '#00f2fe',
+      boilerColor: isLight ? '#d97706' : '#f59e0b',
+      o2Color: isLight ? '#059669' : '#10b981',
+      limitColor: isLight ? '#dc2626' : '#ef4444'
     };
   },
 
@@ -48,7 +51,7 @@ const Analytics = {
     }
   },
 
-  // 1. График тренда pH
+  // 1. График тренда pH (Неоновый циан и амбер)
   renderPhTrend() {
     const canvas = document.getElementById('chartPh');
     if (!canvas) return;
@@ -71,23 +74,33 @@ const Analytics = {
         labels,
         datasets: [
           {
-            label: 'Питательная вода (норма 8.5-9.5)',
+            label: 'Питательная вода (норма 8.5–9.5)',
             data: labels.map(l => feedDataMap.get(l) ?? null),
-            borderColor: '#0284c7',
-            backgroundColor: 'rgba(2, 132, 199, 0.15)',
-            tension: 0.3,
-            fill: false,
+            borderColor: theme.feedColor,
+            backgroundColor: theme.isLight ? 'rgba(2, 132, 199, 0.12)' : 'rgba(0, 242, 254, 0.15)',
+            borderWidth: 2.5,
+            pointBackgroundColor: theme.feedColor,
+            pointBorderColor: '#fff',
+            pointBorderWidth: 1.5,
             pointRadius: 5,
+            pointHoverRadius: 7,
+            tension: 0.35,
+            fill: true,
             spanGaps: true
           },
           {
-            label: 'Котловая вода (норма 9.3-11.2)',
+            label: 'Котловая вода (норма 9.3–11.2)',
             data: labels.map(l => boilerDataMap.get(l) ?? null),
-            borderColor: '#f59e0b',
-            backgroundColor: 'rgba(245, 158, 11, 0.15)',
-            tension: 0.3,
-            fill: false,
+            borderColor: theme.boilerColor,
+            backgroundColor: theme.isLight ? 'rgba(217, 119, 6, 0.12)' : 'rgba(245, 158, 11, 0.15)',
+            borderWidth: 2.5,
+            pointBackgroundColor: theme.boilerColor,
+            pointBorderColor: '#fff',
+            pointBorderWidth: 1.5,
             pointRadius: 5,
+            pointHoverRadius: 7,
+            tension: 0.35,
+            fill: true,
             spanGaps: true
           }
         ]
@@ -95,8 +108,9 @@ const Analytics = {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
         plugins: {
-          legend: { labels: { color: theme.legendColor, font: { weight: '600' } } }
+          legend: { labels: { color: theme.legendColor, font: { weight: '700', size: 12 } } }
         },
         scales: {
           x: { ticks: { color: theme.textColor }, grid: { color: theme.gridColor } },
@@ -105,14 +119,14 @@ const Analytics = {
             max: 12.0,
             ticks: { color: theme.textColor },
             grid: { color: theme.gridColor },
-            title: { display: true, text: 'pH', color: theme.textColor }
+            title: { display: true, text: 'pH', color: theme.textColor, font: { weight: '700' } }
           }
         }
       }
     });
   },
 
-  // 2. Кислород O2 с красной чертой нормы ПТЭ ТЭ
+  // 2. Кислород O2 с неоновой чертой нормы ПТЭ ТЭ
   renderO2Trend() {
     const canvas = document.getElementById('chartO2');
     if (!canvas) return;
@@ -137,18 +151,23 @@ const Analytics = {
           {
             label: 'Замер O₂ (мкг/дм³)',
             data: values,
-            borderColor: '#10b981',
-            backgroundColor: 'rgba(16, 185, 129, 0.12)',
+            borderColor: theme.o2Color,
+            backgroundColor: theme.isLight ? 'rgba(5, 150, 105, 0.1)' : 'rgba(16, 185, 129, 0.15)',
+            borderWidth: 2.5,
             pointBackgroundColor: values.map(v => v > 20.0 ? '#ef4444' : (v > 15.0 ? '#f59e0b' : '#10b981')),
+            pointBorderColor: '#fff',
+            pointBorderWidth: 1.5,
             pointRadius: 6,
-            tension: 0.25
+            pointHoverRadius: 8,
+            tension: 0.3,
+            fill: true
           },
           {
             label: 'Предел нормы ПТЭ ТЭ (≤ 20 мкг/дм³)',
             data: limitNorm,
-            borderColor: '#ef4444',
+            borderColor: theme.limitColor,
             borderDash: [6, 4],
-            borderWidth: 2,
+            borderWidth: 2.5,
             pointRadius: 0,
             fill: false
           }
@@ -157,8 +176,9 @@ const Analytics = {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
         plugins: {
-          legend: { labels: { color: theme.legendColor, font: { weight: '600' } } }
+          legend: { labels: { color: theme.legendColor, font: { weight: '700', size: 12 } } }
         },
         scales: {
           x: { ticks: { color: theme.textColor }, grid: { color: theme.gridColor } },
@@ -166,14 +186,14 @@ const Analytics = {
             min: 0,
             ticks: { color: theme.textColor },
             grid: { color: theme.gridColor },
-            title: { display: true, text: 'мкг/дм³', color: theme.textColor }
+            title: { display: true, text: 'мкг/дм³', color: theme.textColor, font: { weight: '700' } }
           }
         }
       }
     });
   },
 
-  // 3. Жесткость фильтратов ХВО
+  // 3. Жесткость ХВО
   renderHardnessTrend() {
     const canvas = document.getElementById('chartHardness');
     if (!canvas) return;
@@ -198,15 +218,17 @@ const Analytics = {
           {
             label: 'Жесткость фильтратов ХВО (мкг-экв/дм³)',
             data: softValues,
-            backgroundColor: softValues.map(v => v > 15 ? '#ef4444' : (v > 10 ? '#f59e0b' : '#0284c7')),
-            borderRadius: 4
+            backgroundColor: softValues.map(v => v > 15 ? '#ef4444' : (v > 10 ? '#f59e0b' : (theme.isLight ? '#0284c7' : '#00f2fe'))),
+            borderRadius: 6,
+            borderSkipped: false
           },
           {
             type: 'line',
-            label: 'Норма до регенерации (15 мкг-экв/дм³)',
+            label: 'Норма до истощения смолы (15 мкг-экв/дм³)',
             data: limitSoft,
-            borderColor: '#ef4444',
+            borderColor: theme.limitColor,
             borderDash: [5, 5],
+            borderWidth: 2,
             fill: false,
             pointRadius: 0
           }
@@ -216,7 +238,7 @@ const Analytics = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { labels: { color: theme.legendColor, font: { weight: '600' } } }
+          legend: { labels: { color: theme.legendColor, font: { weight: '700', size: 12 } } }
         },
         scales: {
           x: { ticks: { color: theme.textColor }, grid: { color: theme.gridColor } },
@@ -224,7 +246,7 @@ const Analytics = {
             min: 0,
             ticks: { color: theme.textColor },
             grid: { color: theme.gridColor },
-            title: { display: true, text: 'мкг-экв/дм³', color: theme.textColor }
+            title: { display: true, text: 'мкг-экв/дм³', color: theme.textColor, font: { weight: '700' } }
           }
         }
       }
@@ -253,7 +275,8 @@ const Analytics = {
             data: [normal, warn, alarm],
             backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
             borderWidth: 3,
-            borderColor: theme.pieBorder
+            borderColor: theme.pieBorder,
+            hoverOffset: 6
           }
         ]
       },
@@ -261,7 +284,7 @@ const Analytics = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'bottom', labels: { color: theme.legendColor, font: { weight: '600' } } }
+          legend: { position: 'bottom', labels: { color: theme.legendColor, font: { weight: '700', size: 12 } } }
         }
       }
     });
