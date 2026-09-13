@@ -116,18 +116,24 @@ body {
 }
 
 /* --------------------------------------------------------------------
-   HEADER & NAVIGATION
+   HEADER & NAVIGATION (Синяя верхняя шторка Microsoft)
    -------------------------------------------------------------------- */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: var(--bg-card);
-  border-bottom: 1px solid var(--border-main);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, #0078d4, #0063b1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
   height: var(--header-height);
   display: flex;
   align-items: center;
+}
+
+[data-theme="dark"] .app-header {
+  background: linear-gradient(135deg, #005a9e, #004578);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .header-container {
@@ -149,41 +155,42 @@ body {
 }
 
 .brand-badge {
-  width: 38px;
-  height: 38px;
-  border-radius: 9px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
-  box-shadow: 0 2px 4px rgba(0, 120, 212, 0.25);
+  font-size: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
 }
 
 .brand-title {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: #ffffff;
   letter-spacing: -0.01em;
   line-height: 1.2;
 }
 
 .brand-subtitle {
   font-size: 0.72rem;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.85);
   display: block;
 }
 
-/* Desktop Nav Tabs */
+/* Desktop Nav Tabs in Blue Header */
 .nav-tabs {
   display: none;
   align-items: center;
   gap: 0.35rem;
-  background-color: var(--bg-app);
+  background-color: rgba(0, 0, 0, 0.2);
   padding: 0.25rem;
   border-radius: var(--radius-md);
-  border: 1px solid var(--border-main);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 @media (min-width: 901px) {
@@ -199,7 +206,7 @@ body {
   padding: 0.45rem 0.9rem;
   border: none;
   background: transparent;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.88);
   font-size: 0.88rem;
   font-weight: 600;
   border-radius: var(--radius-sm);
@@ -209,22 +216,23 @@ body {
 }
 
 .nav-tab-btn:hover {
-  color: var(--text-main);
-  background-color: rgba(0, 0, 0, 0.04);
-}
-
-[data-theme="dark"] .nav-tab-btn:hover {
-  background-color: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.16);
 }
 
 .nav-tab-btn.active {
-  background-color: var(--bg-card);
-  color: var(--primary);
-  box-shadow: var(--shadow-sm);
+  background-color: #ffffff;
+  color: #0078d4;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .nav-tab-btn.active {
+  background-color: #ffffff;
+  color: #005a9e;
 }
 
 .nav-badge {
-  background-color: var(--status-alarm);
+  background-color: #e81123;
   color: #ffffff;
   font-size: 0.7rem;
   font-weight: 700;
@@ -246,6 +254,44 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+/* Header Buttons styling against blue background */
+.header-actions .btn-primary {
+  background-color: #ffffff;
+  color: #0078d4;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.header-actions .btn-primary:hover {
+  background-color: #f3f2f1;
+  color: #005a9e;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.header-actions .btn-outline {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+
+.header-actions .btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+}
+
+.header-actions .btn-icon {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+
+.header-actions .btn-icon:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #ffffff;
 }
 
 /* --------------------------------------------------------------------

@@ -27,7 +27,8 @@ const App = {
 
     const metaTheme = document.querySelector('meta[name="theme-color"]');
     if (metaTheme) {
-      metaTheme.setAttribute('content', theme === 'dark' ? '#1b1a19' : '#0078d4');
+      // Синяя шторка в обоих режимах (в темном чуть более глубокий сапфировый синий #005a9e)
+      metaTheme.setAttribute('content', theme === 'dark' ? '#005a9e' : '#0078d4');
     }
 
     if (window.Analytics && typeof window.Analytics.render === 'function') {
