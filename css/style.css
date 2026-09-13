@@ -1,926 +1,983 @@
-/* ==========================================================================
-   Boiler Water Chemistry Lab (ВХР) - Microsoft 365 & Excel Fluent Design
-   Официальный стиль Microsoft Office (Excel / Word / Fluent UI)
-   ========================================================================== */
-
-/* --- EXCEL LIGHT THEME (Классический Microsoft Office) --- */
-:root,
-[data-theme="light"] {
-  --ms-excel-green: #107c41;
-  --ms-excel-darkgreen: #0b5a2f;
-  --ms-excel-lightgreen: #21a366;
-  --ms-excel-subtle: #dff6dd;
-  
-  --bg-window: #f3f2f1;
-  --bg-card: #ffffff;
-  --bg-card-hover: #faf9f8;
-  --bg-input: #ffffff;
-  
-  --border-color: #edebe9;
-  --border-grid: #e1dfdd;
-  --border-dark: #8a8886;
-  --border-focus: #107c41;
-  
-  --text-main: #201f1e;
-  --text-muted: #605e5c;
-  --text-dim: #a19f9d;
-  
-  --header-bg: #107c41;
-  --header-text: #ffffff;
-  --ribbon-bg: #ffffff;
-  --formula-bar-bg: #ffffff;
-  --table-th-bg: #f3f2f1;
-  --sheet-bar-bg: #f3f2f1;
-  --sheet-tab-active: #ffffff;
-  
-  --color-primary: #107c41;
-  --color-primary-hover: #0b5a2f;
-  
-  --status-normal: #107c41;
-  --status-normal-bg: #e6f4ea;
-  --status-warn: #b25e02;
-  --status-warn-bg: #fff8e5;
-  --status-alarm: #a80000;
-  --status-alarm-bg: #fde7e9;
-  
-  --shadow-fluent: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.13), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.1);
-  --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.05);
-  --modal-overlay: rgba(0, 0, 0, 0.4);
-}
-
-/* --- EXCEL DARK THEME (Office Dark / Black) --- */
-[data-theme="dark"] {
-  --ms-excel-green: #107c41;
-  --ms-excel-darkgreen: #0b5a2f;
-  --ms-excel-lightgreen: #21a366;
-  --ms-excel-subtle: rgba(16, 124, 65, 0.2);
-  
-  --bg-window: #1b1a19;
-  --bg-card: #252423;
-  --bg-card-hover: #2d2c2b;
-  --bg-input: #201f1e;
-  
-  --border-color: #323130;
-  --border-grid: #3b3a39;
-  --border-dark: #605e5c;
-  --border-focus: #21a366;
-  
-  --text-main: #f3f2f1;
-  --text-muted: #c8c6c4;
-  --text-dim: #8a8886;
-  
-  --header-bg: #0e5b30;
-  --header-text: #ffffff;
-  --ribbon-bg: #201f1e;
-  --formula-bar-bg: #252423;
-  --table-th-bg: #2b2a29;
-  --sheet-bar-bg: #1b1a19;
-  --sheet-tab-active: #292827;
-  
-  --color-primary: #21a366;
-  --color-primary-hover: #107c41;
-  
-  --status-normal: #34d399;
-  --status-normal-bg: rgba(16, 185, 129, 0.15);
-  --status-warn: #fbbf24;
-  --status-warn-bg: rgba(245, 158, 11, 0.15);
-  --status-alarm: #f87171;
-  --status-alarm-bg: rgba(239, 68, 68, 0.2);
-  
-  --shadow-fluent: 0 2px 8px rgba(0, 0, 0, 0.45);
-  --shadow-card: 0 2px 6px rgba(0, 0, 0, 0.35);
-  --modal-overlay: rgba(0, 0, 0, 0.7);
-}
+/* ====================================================================
+   ВХР ЛАБОРАТОРИЯ — MODERN MICROSOFT BLUE & FLUENT UI
+   ==================================================================== */
 
 :root {
-  --font-fluent: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: 'Consolas', 'Courier New', monospace;
-  --radius-fluent: 4px;
+  /* Microsoft Blue Core Colors */
+  --primary: #0078d4;
+  --primary-hover: #106ebe;
+  --primary-active: #005a9e;
+  --primary-light: #eff6fc;
+  --primary-subtle: #deecf9;
+  --primary-border: #c7e0f4;
+
+  /* Status Colors */
+  --status-normal: #107c41;
+  --status-normal-bg: #dff6dd;
+  --status-warn: #b86200;
+  --status-warn-bg: #fff4ce;
+  --status-alarm: #c50f1f;
+  --status-alarm-bg: #fde7e9;
+
+  /* Light Theme (Clean Microsoft Office Slate) */
+  --bg-app: #f4f6f9;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f9fafb;
+  --bg-input: #ffffff;
+  --border-main: #e2e8f0;
+  --border-focus: #0078d4;
+  
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+  --table-header-bg: #f8fafc;
+  --table-row-hover: #f1f5f9;
+  --table-row-stripe: #fafbfc;
+  --table-border: #e2e8f0;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --header-height: 60px;
 }
 
-* {
+/* --------------------------------------------------------------------
+   DARK THEME (Deep Slate / Midnight Navy)
+   -------------------------------------------------------------------- */
+[data-theme="dark"] {
+  --primary: #38bdf8;
+  --primary-hover: #0ea5e9;
+  --primary-active: #0284c7;
+  --primary-light: rgba(56, 189, 248, 0.12);
+  --primary-subtle: rgba(56, 189, 248, 0.2);
+  --primary-border: rgba(56, 189, 248, 0.35);
+
+  --status-normal: #34d399;
+  --status-normal-bg: rgba(16, 185, 129, 0.16);
+  --status-warn: #fbbf24;
+  --status-warn-bg: rgba(245, 158, 11, 0.16);
+  --status-alarm: #f87171;
+  --status-alarm-bg: rgba(239, 68, 68, 0.18);
+
+  --bg-app: #0f172a;
+  --bg-card: #1e293b;
+  --bg-card-hover: #273549;
+  --bg-input: #151e2e;
+  --border-main: #334155;
+  --border-focus: #38bdf8;
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+
+  --table-header-bg: #162032;
+  --table-row-hover: #243144;
+  --table-row-stripe: #1b2536;
+  --table-border: #334155;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+/* --------------------------------------------------------------------
+   BASE STYLES & RESET
+   -------------------------------------------------------------------- */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  font-family: var(--font-fluent);
-  background-color: var(--bg-window);
+  font-family: var(--font-family);
+  background-color: var(--bg-app);
   color: var(--text-main);
-  line-height: 1.45;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 75px;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* ==========================================================================
-   MICROSOFT OFFICE TITLE BAR & RIBBON
-   ========================================================================== */
-.office-titlebar {
-  background: var(--header-bg);
-  color: var(--header-text);
-  height: 42px;
+@media (min-width: 901px) {
+  body {
+    padding-bottom: 30px;
+  }
+}
+
+/* --------------------------------------------------------------------
+   HEADER & NAVIGATION
+   -------------------------------------------------------------------- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-main);
+  box-shadow: var(--shadow-sm);
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+}
+
+.header-container {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
-  font-size: 0.84rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  position: sticky;
-  top: 0;
-  z-index: 110;
+  gap: 1rem;
 }
 
-.titlebar-left {
+.header-brand {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
+  text-decoration: none;
 }
 
-.excel-icon-box {
-  background: #094723;
-  color: white;
-  width: 26px;
-  height: 26px;
-  border-radius: 3px;
+.brand-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-size: 0.95rem;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  font-size: 1.25rem;
+  box-shadow: 0 2px 4px rgba(0, 120, 212, 0.25);
 }
 
-.titlebar-doc-name {
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.autosave-pill {
-  background: rgba(255, 255, 255, 0.18);
-  font-size: 0.7rem;
-  padding: 1px 7px;
-  border-radius: 10px;
-  font-weight: normal;
-}
-
-.titlebar-search {
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: white;
-  padding: 3px 12px;
-  border-radius: 14px;
-  font-size: 0.8rem;
-  width: 260px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.titlebar-search input {
-  background: transparent;
-  border: none;
-  color: white;
-  outline: none;
-  font-size: 0.8rem;
-  width: 100%;
-}
-.titlebar-search input::placeholder {
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.titlebar-right {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.titlebar-btn {
-  background: rgba(255, 255, 255, 0.15);
-  border: none;
-  color: white;
-  padding: 3px 9px;
-  border-radius: 3px;
-  font-size: 0.78rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  transition: background 0.15s;
-}
-.titlebar-btn:hover {
-  background: rgba(255, 255, 255, 0.28);
-}
-
-/* ==========================================================================
-   OFFICE RIBBON (Лента инструментов Microsoft Office)
-   ========================================================================== */
-.office-ribbon {
-  background: var(--ribbon-bg);
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  position: sticky;
-  top: 42px;
-  z-index: 105;
-}
-
-.ribbon-tabs-bar {
-  display: flex;
-  padding: 0 0.5rem;
-  border-bottom: 1px solid var(--border-color);
-  background: var(--bg-window);
-}
-
-.ribbon-tab {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  padding: 0.45rem 1rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-.ribbon-tab:hover {
-  color: var(--text-main);
-  background: rgba(0, 0, 0, 0.04);
-}
-.ribbon-tab.active {
-  color: var(--ms-excel-green);
-  border-bottom-color: var(--ms-excel-green);
-  background: var(--ribbon-bg);
-}
-[data-theme="dark"] .ribbon-tab.active {
-  color: var(--ms-excel-lightgreen);
-  border-bottom-color: var(--ms-excel-lightgreen);
-}
-
-.ribbon-tools-panel {
-  padding: 0.5rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  overflow-x: auto;
-  min-height: 62px;
-}
-
-.ribbon-group {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding-right: 0.8rem;
-  border-right: 1px solid var(--border-color);
-}
-.ribbon-group:last-child {
-  border-right: none;
-}
-
-.ribbon-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--text-main);
-  padding: 0.35rem 0.6rem;
-  border-radius: var(--radius-fluent);
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  min-width: 48px;
-  transition: all 0.15s;
-}
-.ribbon-btn .r-icon {
-  font-size: 1.15rem;
-}
-.ribbon-btn:hover {
-  background: var(--bg-window);
-  border-color: var(--border-grid);
-}
-.ribbon-btn-primary {
-  background: var(--ms-excel-green) !important;
-  color: white !important;
-  border-color: var(--ms-excel-green) !important;
-}
-.ribbon-btn-primary:hover {
-  filter: brightness(0.92);
-}
-
-/* ==========================================================================
-   FORMULA BAR (Строка формул Excel: fx)
-   ========================================================================== */
-.excel-formula-bar {
-  background: var(--formula-bar-bg);
-  border-bottom: 1px solid var(--border-color);
-  padding: 0.35rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.82rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-}
-
-.name-box {
-  width: 120px;
-  padding: 2px 8px;
-  background: var(--bg-window);
-  border: 1px solid var(--border-grid);
-  border-radius: 2px;
+.brand-title {
+  font-size: 1.05rem;
   font-weight: 700;
-  font-family: var(--font-mono);
-  color: var(--ms-excel-green);
-  text-align: center;
-}
-[data-theme="dark"] .name-box {
-  color: var(--ms-excel-lightgreen);
-}
-
-.formula-fx-symbol {
-  font-style: italic;
-  font-weight: bold;
-  color: var(--text-dim);
-  font-size: 0.95rem;
-  user-select: none;
-}
-
-.formula-input-field {
-  flex: 1;
-  background: transparent;
-  border: none;
   color: var(--text-main);
-  outline: none;
-  font-family: var(--font-fluent);
-  font-size: 0.82rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
-/* ==========================================================================
-   Main Content Layout
-   ========================================================================== */
-.main-content {
-  flex: 1;
-  padding: 1rem 1.25rem;
-  max-width: 1600px;
-  margin: 0 auto;
-  width: 100%;
+.brand-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+/* Desktop Nav Tabs */
+.nav-tabs {
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: var(--bg-app);
+  padding: 0.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-main);
+}
+
+@media (min-width: 901px) {
+  .nav-tabs {
+    display: flex;
+  }
+}
+
+.nav-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.9rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.nav-tab-btn:hover {
+  color: var(--text-main);
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .nav-tab-btn:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.nav-tab-btn.active {
+  background-color: var(--bg-card);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-badge {
+  background-color: var(--status-alarm);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-full);
+}
+
+.badge-pulse {
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* --------------------------------------------------------------------
+   MAIN LAYOUT & CONTAINERS
+   -------------------------------------------------------------------- */
+.main-container {
+  max-width: 1400px;
+  margin: 1.25rem auto;
+  padding: 0 1.25rem;
 }
 
 .tab-pane {
   display: none;
+  animation: fadeIn 0.2s ease-out;
 }
+
 .tab-pane.active {
   display: block;
 }
 
-/* KPI Summary Cards (Excel Data Blocks) */
-.kpi-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 0.75rem;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Generic Cards */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+}
+
+.card-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
   margin-bottom: 1rem;
 }
 
+.card-divider {
+  border: none;
+  border-top: 1px solid var(--border-main);
+  margin: 1.25rem 0;
+}
+
+/* --------------------------------------------------------------------
+   KPI SUMMARY CARDS
+   -------------------------------------------------------------------- */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .kpi-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+
 .kpi-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-grid);
-  border-radius: var(--radius-fluent);
-  padding: 0.85rem 1.1rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.15rem;
+  box-shadow: var(--shadow-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: var(--shadow-card);
-  border-left: 4px solid var(--border-dark);
+  border-left: 4px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-.kpi-card.kpi-total { border-left-color: #0078d4; }
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.kpi-card.kpi-total { border-left-color: var(--primary); }
 .kpi-card.kpi-normal { border-left-color: var(--status-normal); }
 .kpi-card.kpi-warn { border-left-color: var(--status-warn); }
 .kpi-card.kpi-alarm { border-left-color: var(--status-alarm); }
 
-.kpi-title {
-  font-size: 0.75rem;
-  color: var(--text-muted);
+.kpi-label {
+  display: block;
+  font-size: 0.78rem;
   font-weight: 600;
+  color: var(--text-muted);
   text-transform: uppercase;
-  margin-bottom: 2px;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
 }
+
 .kpi-value {
   font-size: 1.7rem;
-  font-weight: 700;
-  font-family: var(--font-mono);
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
 }
-.kpi-card.kpi-normal .kpi-value { color: var(--status-normal); }
-.kpi-card.kpi-warn .kpi-value { color: var(--status-warn); }
-.kpi-card.kpi-alarm .kpi-value { color: var(--status-alarm); }
 
-/* Excel Filter Toolbar */
-.toolbar-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-grid);
-  border-radius: var(--radius-fluent);
-  padding: 0.65rem 1rem;
-  margin-bottom: 0.85rem;
+.kpi-icon-wrap {
+  font-size: 1.6rem;
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------------------------
+   FILTERS & CONTROLS
+   -------------------------------------------------------------------- */
+.filter-card {
+  padding: 0.9rem 1.1rem;
+}
+
+.filter-flex {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-end;
   gap: 0.75rem;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: var(--shadow-card);
 }
 
-.filter-group {
+.filter-field {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1 1 160px;
+}
+
+.filter-search-field {
+  flex: 2 1 220px;
+}
+
+.filter-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.filter-actions {
+  display: flex;
   gap: 0.5rem;
   align-items: center;
 }
 
-.filter-item select,
-.filter-item input {
-  background: var(--bg-input);
-  border: 1px solid var(--border-grid);
+/* --------------------------------------------------------------------
+   FORM INPUTS & SELECTS
+   -------------------------------------------------------------------- */
+.form-input, .form-select {
+  width: 100%;
+  height: 38px;
+  padding: 0 0.75rem;
+  font-family: inherit;
+  font-size: 0.88rem;
   color: var(--text-main);
-  padding: 0.35rem 0.65rem;
-  border-radius: var(--radius-fluent);
-  font-size: 0.82rem;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
   outline: none;
 }
-.filter-item select:focus,
-.filter-item input:focus {
-  border-color: var(--border-focus);
+
+textarea.form-input {
+  height: auto;
+  padding: 0.5rem 0.75rem;
 }
 
-/* ==========================================================================
-   EXCEL SPREADSHEET TABLE (Сетка электронной таблицы)
-   ========================================================================== */
-.table-responsive {
-  background: var(--bg-card);
-  border: 1px solid var(--border-grid);
-  border-radius: var(--radius-fluent);
-  box-shadow: var(--shadow-card);
+.form-input:focus, .form-select:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.form-group {
+  margin-bottom: 0.85rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.35rem;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+@media (min-width: 640px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.input-unit-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-unit-wrap .form-input {
+  padding-right: 4.5rem;
+}
+
+.unit-badge {
+  position: absolute;
+  right: 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------
+   BUTTONS
+   -------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  height: 38px;
+  padding: 0 1.1rem;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-sm {
+  height: 32px;
+  padding: 0 0.85rem;
+  font-size: 0.82rem;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  box-shadow: 0 2px 5px rgba(0, 120, 212, 0.3);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--border-main);
+  color: var(--text-main);
+}
+
+.btn-outline:hover {
+  background-color: var(--table-row-hover);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-success {
+  background-color: var(--status-normal);
+  color: #ffffff;
+}
+
+.btn-success:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background-color: var(--bg-app);
+  border-color: var(--border-main);
+  color: var(--text-main);
+}
+
+.btn-danger-outline {
+  background-color: transparent;
+  border-color: var(--status-alarm);
+  color: var(--status-alarm);
+}
+
+.btn-danger-outline:hover {
+  background-color: var(--status-alarm-bg);
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-main);
+  background: transparent;
+  color: var(--text-main);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  transition: all 0.15s ease;
+}
+
+.btn-icon:hover {
+  background-color: var(--table-row-hover);
+  border-color: var(--primary);
+}
+
+.btn-icon-danger:hover {
+  border-color: var(--status-alarm);
+  background-color: var(--status-alarm-bg);
+}
+
+@media (max-width: 640px) {
+  .btn-text-hide-sm {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------
+   DATA TABLE (Clean Spreadsheet View)
+   -------------------------------------------------------------------- */
+.table-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.table-container {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.82rem;
+  text-align: left;
+  font-size: 0.86rem;
 }
 
 .data-table th {
-  background: var(--table-th-bg);
+  background-color: var(--table-header-bg);
   color: var(--text-muted);
   font-weight: 700;
-  padding: 0.5rem 0.85rem;
-  border: 1px solid var(--border-grid);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--table-border);
   white-space: nowrap;
-  user-select: none;
 }
 
 .data-table td {
-  padding: 0.65rem 0.85rem;
-  border: 1px solid var(--border-grid);
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--table-border);
+  color: var(--text-main);
   vertical-align: middle;
 }
 
-.record-row:hover {
-  background: var(--bg-card-hover);
-  outline: 1px solid var(--border-focus);
+.data-table tbody tr:nth-child(even) {
+  background-color: var(--table-row-stripe);
 }
 
-.col-time {
-  white-space: nowrap;
-  font-family: var(--font-mono);
+.data-table tbody tr:hover {
+  background-color: var(--table-row-hover);
 }
+
+.record-row.row-status-alarm {
+  border-left: 3px solid var(--status-alarm);
+}
+
+.record-row.row-status-warning {
+  border-left: 3px solid var(--status-warn);
+}
+
 .time-primary {
   font-weight: 700;
+  font-size: 0.95rem;
   color: var(--text-main);
 }
+
 .date-secondary {
-  font-size: 0.72rem;
-  color: var(--text-dim);
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
+
 .shift-badge {
   display: inline-block;
-  font-size: 0.68rem;
-  background: var(--bg-window);
-  border: 1px solid var(--border-grid);
-  padding: 1px 5px;
-  border-radius: 2px;
+  font-size: 0.7rem;
+  font-weight: 600;
   color: var(--text-muted);
+  background-color: var(--bg-app);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  margin-top: 0.2rem;
 }
 
 .point-tag {
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  font-weight: 600;
+  font-size: 0.88rem;
 }
+
 .equipment-sub {
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
-  margin-top: 1px;
+  margin-top: 0.15rem;
 }
 
 .params-grid-cell {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.3rem;
 }
 
 .param-chip {
   display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 2px 7px;
-  border-radius: 3px;
-  font-size: 0.76rem;
-  font-family: var(--font-mono);
-  border: 1px solid var(--border-grid);
-  background: var(--bg-window);
-}
-.param-chip.val-ok {
-  background: var(--status-normal-bg);
-  border-color: var(--status-normal);
-  color: var(--status-normal);
-}
-.param-chip.val-warn {
-  background: var(--status-warn-bg);
-  border-color: var(--status-warn);
-  color: var(--status-warn);
-  font-weight: 700;
-}
-.param-chip.val-alarm {
-  background: var(--status-alarm-bg);
-  border-color: var(--status-alarm);
-  color: var(--status-alarm);
-  font-weight: 700;
-}
-.param-lbl {
-  color: var(--text-muted);
-  font-size: 0.7rem;
-  font-family: var(--font-fluent);
+  align-items: baseline;
+  gap: 0.2rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 4px;
+  background-color: var(--bg-app);
+  border: 1px solid var(--border-main);
+  font-size: 0.78rem;
 }
 
-.badge {
+.param-chip .param-key {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.param-chip .param-val {
+  font-weight: 700;
+  font-family: monospace;
+}
+
+.param-chip.alarm {
+  background-color: var(--status-alarm-bg);
+  border-color: var(--status-alarm);
+  color: var(--status-alarm);
+}
+
+.param-chip.warn {
+  background-color: var(--status-warn-bg);
+  border-color: var(--status-warn);
+  color: var(--status-warn);
+}
+
+.badge-status {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 3px 8px;
-  font-size: 0.72rem;
+  gap: 0.35rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-size: 0.76rem;
   font-weight: 700;
-  border-radius: 3px;
-  white-space: nowrap;
+  letter-spacing: 0.02em;
 }
+
 .badge-normal {
-  background: var(--status-normal-bg);
+  background-color: var(--status-normal-bg);
   color: var(--status-normal);
-  border: 1px solid var(--status-normal);
 }
-.badge-warning {
-  background: var(--status-warn-bg);
+
+.badge-warn {
+  background-color: var(--status-warn-bg);
   color: var(--status-warn);
-  border: 1px solid var(--status-warn);
 }
+
 .badge-alarm {
-  background: var(--status-alarm-bg);
+  background-color: var(--status-alarm-bg);
   color: var(--status-alarm);
-  border: 1px solid var(--status-alarm);
 }
 
 .issues-list {
-  margin-top: 3px;
-  font-size: 0.72rem;
+  margin-top: 0.35rem;
+  font-size: 0.74rem;
 }
+
 .issue-item {
   color: var(--status-alarm);
-  margin-top: 1px;
-}
-.issue-item.issue-warning {
-  color: var(--status-warn);
+  font-weight: 500;
+  margin-top: 0.1rem;
 }
 
 .notes-cell {
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   color: var(--text-main);
-  max-width: 260px;
+  max-width: 280px;
 }
+
 .tech-signature {
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  margin-top: 2px;
-}
-
-/* ==========================================================================
-   EXCEL SHEET TABS (Вкладки листов внизу экрана таблицы)
-   ========================================================================== */
-.excel-sheet-tabs-bar {
-  background: var(--sheet-bar-bg);
-  border-top: 1px solid var(--border-grid);
-  display: flex;
-  align-items: center;
-  padding: 0 0.5rem;
-  height: 32px;
-  font-size: 0.78rem;
-  user-select: none;
-}
-
-.sheet-tab {
-  background: transparent;
-  border: 1px solid transparent;
-  border-bottom: none;
+  font-size: 0.74rem;
   color: var(--text-muted);
-  padding: 4px 14px;
-  cursor: pointer;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  height: 28px;
-  border-radius: 3px 3px 0 0;
-  transition: all 0.15s;
-}
-.sheet-tab.active {
-  background: var(--sheet-tab-active);
-  border-color: var(--border-grid);
-  color: var(--ms-excel-green);
-  border-top: 2px solid var(--ms-excel-green);
-}
-[data-theme="dark"] .sheet-tab.active {
-  color: var(--ms-excel-lightgreen);
-  border-top-color: var(--ms-excel-lightgreen);
-}
-.sheet-tab:hover:not(.active) {
-  background: rgba(0, 0, 0, 0.04);
+  margin-top: 0.25rem;
 }
 
-.sheet-add-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-dim);
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 0 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.sheet-add-btn:hover {
-  color: var(--text-main);
+.row-actions-group {
+  display: inline-flex;
+  gap: 0.35rem;
 }
 
-/* ==========================================================================
-   Calculators Layout (Fluent Cards)
-   ========================================================================== */
-.calc-subtabs {
+.text-right {
+  text-align: right;
+}
+
+/* --------------------------------------------------------------------
+   CALCULATORS
+   -------------------------------------------------------------------- */
+.calc-nav {
   display: flex;
-  gap: 0.25rem;
-  border-bottom: 1px solid var(--border-grid);
+  gap: 0.4rem;
+  overflow-x: auto;
   padding-bottom: 0.5rem;
-  margin-bottom: 1.25rem;
-  background: var(--bg-card);
-  padding: 0.5rem 0.75rem;
-  border-radius: var(--radius-fluent);
-  box-shadow: var(--shadow-card);
+  margin-bottom: 1rem;
 }
 
-.calc-subtab {
-  background: transparent;
-  border: 1px solid transparent;
+.calc-tab-btn {
+  padding: 0.55rem 1rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-sm);
   color: var(--text-muted);
-  padding: 0.4rem 1rem;
-  border-radius: var(--radius-fluent);
-  cursor: pointer;
-  font-size: 0.85rem;
   font-weight: 600;
-  transition: all 0.15s;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
 }
-.calc-subtab:hover {
-  background: var(--bg-window);
+
+.calc-tab-btn:hover {
+  color: var(--text-main);
+  border-color: var(--primary);
 }
-.calc-subtab.active {
-  background: var(--ms-excel-green);
-  color: white;
+
+.calc-tab-btn.active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 120, 212, 0.25);
 }
 
 .calc-pane {
   display: none;
 }
+
 .calc-pane.active {
+  display: block;
+}
+
+.calc-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1.25rem;
 }
-@media (max-width: 900px) {
-  .calc-pane.active { grid-template-columns: 1fr; }
+
+@media (min-width: 900px) {
+  .calc-grid {
+    grid-template-columns: 1.2fr 1fr;
+  }
 }
 
-.calc-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-grid);
-  border-radius: var(--radius-fluent);
-  padding: 1.25rem;
-  box-shadow: var(--shadow-card);
-}
-
-.calc-card h3 {
-  font-size: 1.05rem;
-  color: var(--text-main);
-  margin-bottom: 0.4rem;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-weight: 700;
-}
-.calc-card p.calc-desc {
+.formula-banner {
+  background-color: var(--primary-light);
+  border-left: 3px solid var(--primary);
+  padding: 0.65rem 0.85rem;
   font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--border-grid);
-  padding-bottom: 0.5rem;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.85rem;
-}
-
-.form-group {
-  margin-bottom: 0.85rem;
-}
-.form-group label {
-  display: block;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  margin-bottom: 0.25rem;
-  font-weight: 600;
-}
-
-.form-control {
-  background: var(--bg-input);
-  border: 1px solid var(--border-grid);
   color: var(--text-main);
-  padding: 0.45rem 0.75rem;
-  border-radius: var(--radius-fluent);
-  font-size: 0.85rem;
-  width: 100%;
-  outline: none;
-  transition: border-color 0.15s;
-}
-.form-control:focus {
-  border-color: var(--border-focus);
-  box-shadow: inset 0 0 0 1px var(--border-focus);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 1.15rem;
 }
 
-.input-with-addon {
+.calc-results-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.calc-res-item {
+  background-color: var(--bg-app);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
-  position: relative;
-}
-.input-with-addon .addon-unit {
-  position: absolute;
-  right: 0.75rem;
-  font-size: 0.74rem;
-  color: var(--text-dim);
-  pointer-events: none;
-  font-weight: 600;
-}
-
-.calc-results-panel {
-  background: var(--bg-window);
-  border: 1px solid var(--border-grid);
-  border-radius: var(--radius-fluent);
-  padding: 1rem;
-  margin-top: 0.85rem;
-}
-
-.res-row {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid var(--border-grid);
 }
-.res-row:last-child {
-  border-bottom: none;
-}
-.res-label {
+
+.calc-res-label {
   font-size: 0.82rem;
   color: var(--text-muted);
 }
-.res-value {
-  font-size: 1.15rem;
-  font-weight: 700;
-  font-family: var(--font-mono);
-  color: var(--ms-excel-green);
-}
-[data-theme="dark"] .res-value {
-  color: var(--ms-excel-lightgreen);
+
+.calc-res-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
 }
 
-.formula-box {
-  background: var(--bg-window);
-  border-left: 3px solid var(--ms-excel-green);
-  padding: 0.65rem 0.85rem;
-  border-radius: 2px;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--text-main);
-  margin-bottom: 0.85rem;
-}
-
-/* ==========================================================================
-   Reminders & Timers Layout
-   ========================================================================== */
-.reminders-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+/* --------------------------------------------------------------------
+   REMINDERS & SCHEDULE
+   -------------------------------------------------------------------- */
+.header-banner-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
 }
 
+.banner-content .card-desc {
+  margin-bottom: 0;
+}
+
+.banner-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.reminders-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+@media (min-width: 640px) {
+  .reminders-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .reminders-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .reminder-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-grid);
-  border-radius: var(--radius-fluent);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-md);
   padding: 1.1rem;
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: var(--shadow-card);
-  position: relative;
-  transition: box-shadow 0.15s;
+  gap: 0.75rem;
+  transition: transform 0.15s ease;
+  border-left: 4px solid var(--primary);
 }
+
 .reminder-card:hover {
-  box-shadow: var(--shadow-fluent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
-.reminder-card.rem-overdue {
-  border-left: 4px solid var(--status-alarm);
-  background: var(--status-alarm-bg);
-}
+
 .reminder-card.rem-soon {
-  border-left: 4px solid var(--status-warn);
+  border-left-color: var(--status-warn);
+}
+
+.reminder-card.rem-overdue {
+  border-left-color: var(--status-alarm);
+  background-color: var(--status-alarm-bg);
+}
+
+.reminder-card.rem-disabled {
+  opacity: 0.6;
+  border-left-color: var(--border-main);
 }
 
 .rem-header {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.5rem;
+  justify-content: space-between;
   gap: 0.5rem;
 }
+
 .rem-title-group {
   display: flex;
-  gap: 0.6rem;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
+
 .rem-icon {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
 }
+
 .rem-title {
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--text-main);
+  line-height: 1.2;
 }
+
 .rem-subtitle {
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
+  margin-top: 0.15rem;
 }
+
 .rem-time-badge {
-  background: var(--bg-window);
-  border: 1px solid var(--border-grid);
-  padding: 3px 8px;
-  border-radius: 2px;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: var(--ms-excel-green);
+  padding: 0.18rem 0.5rem;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-app);
+  color: var(--text-muted);
   white-space: nowrap;
 }
-[data-theme="dark"] .rem-time-badge {
-  color: var(--ms-excel-lightgreen);
-}
-.rem-time-badge.badge-due {
-  background: var(--status-alarm);
-  color: white;
-  border-color: var(--status-alarm);
+
+.badge-due {
+  background-color: var(--status-alarm);
+  color: #ffffff;
 }
 
 .rem-notes {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
-  background: var(--bg-window);
-  padding: 0.4rem 0.65rem;
-  border-radius: 2px;
-  margin-bottom: 0.85rem;
-  border-left: 2px solid var(--border-dark);
+  background-color: var(--bg-app);
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
 }
 
 .rem-actions {
@@ -929,332 +986,242 @@ body {
   gap: 0.35rem;
 }
 
-/* ==========================================================================
-   Charts Grid (Excel Chart Cards)
-   ========================================================================== */
+/* --------------------------------------------------------------------
+   CHARTS & ANALYTICS
+   -------------------------------------------------------------------- */
 .charts-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1.25rem;
 }
-@media (max-width: 1000px) {
-  .charts-grid { grid-template-columns: 1fr; }
+
+@media (min-width: 768px) {
+  .charts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .chart-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-grid);
-  border-radius: var(--radius-fluent);
   padding: 1.1rem;
-  box-shadow: var(--shadow-card);
 }
+
 .chart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.85rem;
-}
-.chart-title {
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--text-main);
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.chart-container-box {
+
+.chart-box {
   position: relative;
-  height: 270px;
+  height: 250px;
   width: 100%;
 }
 
-/* ==========================================================================
-   Modal Windows (Fluent Dialogs)
-   ========================================================================== */
+/* --------------------------------------------------------------------
+   NORMS & SETTINGS
+   -------------------------------------------------------------------- */
+.norms-scroll-box {
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.norm-point-box {
+  background-color: var(--bg-app);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.norm-point-header {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.norm-param-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px dashed var(--border-main);
+}
+
+.norm-param-row:last-child {
+  border-bottom: none;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-checkbox {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+
+.form-checkbox-label {
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: var(--text-main);
+}
+
+.button-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------
+   MODAL DIALOGS
+   -------------------------------------------------------------------- */
 .modal-overlay {
-  display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--modal-overlay);
+  inset: 0;
   z-index: 1000;
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  display: none;
   align-items: center;
   justify-content: center;
   padding: 1rem;
 }
+
 .modal-overlay.active {
   display: flex;
+  animation: fadeIn 0.15s ease-out;
 }
 
-.modal-content {
-  background: var(--bg-card);
-  border: 1px solid var(--border-dark);
-  border-radius: var(--radius-fluent);
-  max-width: 650px;
+.modal-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 680px;
   width: 100%;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  box-shadow: var(--shadow-fluent);
+  overflow: hidden;
+}
+
+.modal-card.modal-sm {
+  max-width: 480px;
 }
 
 .modal-header {
-  padding: 0.85rem 1.25rem;
-  border-bottom: 1px solid var(--border-grid);
+  padding: 1.15rem 1.4rem;
+  border-bottom: 1px solid var(--border-main);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: var(--bg-window);
+  justify-content: space-between;
 }
-.modal-header h3 {
-  font-size: 1rem;
+
+.modal-title {
+  font-size: 1.05rem;
   font-weight: 700;
+  color: var(--text-main);
 }
 
 .modal-body {
-  padding: 1.25rem;
+  padding: 1.4rem;
   overflow-y: auto;
-  flex: 1;
+}
+
+.modal-section-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 1.15rem 0 0.65rem 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border-main);
 }
 
 .modal-footer {
-  padding: 0.75rem 1.25rem;
-  border-top: 1px solid var(--border-grid);
+  padding: 1rem 1.4rem;
+  border-top: 1px solid var(--border-main);
   display: flex;
   justify-content: flex-end;
-  gap: 0.5rem;
-  background: var(--bg-window);
+  gap: 0.65rem;
+  background-color: var(--bg-app);
 }
 
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  padding: 0.45rem 1rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-  border-radius: var(--radius-fluent);
-  border: 1px solid var(--border-grid);
-  cursor: pointer;
-  transition: all 0.15s;
-  text-decoration: none;
-}
-.btn-primary {
-  background: var(--ms-excel-green);
-  color: white;
-  border-color: var(--ms-excel-green);
-}
-.btn-primary:hover {
-  background: var(--ms-excel-darkgreen);
-  border-color: var(--ms-excel-darkgreen);
-}
-.btn-outline {
-  background: var(--bg-card);
-  border-color: var(--border-grid);
-  color: var(--text-main);
-}
-.btn-outline:hover {
-  background: var(--bg-window);
-  border-color: var(--border-dark);
-}
-.btn-danger-outline {
-  background: transparent;
-  border-color: var(--status-alarm);
-  color: var(--status-alarm);
-}
-.btn-danger-outline:hover {
-  background: var(--status-alarm-bg);
-}
-.btn-sm {
-  padding: 0.3rem 0.65rem;
-  font-size: 0.78rem;
-}
-.btn-icon {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.3rem;
-  font-size: 0.95rem;
-  border-radius: 2px;
-}
-.btn-icon:hover {
-  background: rgba(0, 0, 0, 0.08);
-}
-
-.param-header-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.25rem;
-}
-.norm-tip {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-}
-.param-feedback {
-  font-size: 0.72rem;
-  margin-top: 2px;
-  min-height: 14px;
-}
-
-.text-danger { color: var(--status-alarm); }
-.text-warning { color: var(--status-warn); }
-.text-success { color: var(--status-normal); }
-.text-muted { color: var(--text-muted); }
-.text-center { text-align: center; }
-.text-right { text-align: right; }
-.py-5 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
-
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-.empty-icon {
-  font-size: 2.5rem;
-  opacity: 0.4;
-}
-
-#printableReportArea {
-  display: none;
-}
-
-/* ==========================================================================
-   MOBILE BOTTOM BAR (Office 365 Mobile)
-   ========================================================================== */
-.bottom-nav {
-  display: none;
+/* --------------------------------------------------------------------
+   MOBILE BOTTOM NAVIGATION (Phones Only)
+   -------------------------------------------------------------------- */
+.mobile-bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 56px;
-  background: var(--bg-card);
-  border-top: 1px solid var(--border-grid);
-  z-index: 999;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  height: 60px;
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border-main);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 900;
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
-.bottom-nav-item {
+@media (min-width: 901px) {
+  .mobile-bottom-nav {
+    display: none;
+  }
+}
+
+.m-nav-item {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  gap: 0.15rem;
+  height: 100%;
   border: none;
+  background: transparent;
   color: var(--text-muted);
   cursor: pointer;
-  padding: 4px 0;
-  font-size: 0.7rem;
-  font-weight: 600;
+  transition: color 0.15s ease;
   position: relative;
 }
-.bottom-nav-item .bnav-icon {
+
+.m-nav-item.active {
+  color: var(--primary);
+}
+
+.m-nav-icon {
   font-size: 1.25rem;
-  margin-bottom: 2px;
-}
-.bottom-nav-item.active {
-  color: var(--ms-excel-green);
-}
-[data-theme="dark"] .bottom-nav-item.active {
-  color: var(--ms-excel-lightgreen);
+  line-height: 1;
 }
 
-.bottom-nav-badge {
+.m-nav-text {
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.m-nav-badge {
   position: absolute;
-  top: 4px;
-  right: 25%;
-  background: var(--status-alarm);
-  color: white;
-  border-radius: 10px;
-  padding: 1px 5px;
-  font-size: 0.62rem;
-  font-weight: 800;
-}
-
-/* ==========================================================================
-   MOBILE RESPONSIVENESS
-   ========================================================================== */
-@media (max-width: 768px) {
-  .bottom-nav {
-    display: flex;
-  }
-  .office-ribbon {
-    display: none;
-  }
-  .titlebar-search {
-    display: none;
-  }
-  .main-content {
-    padding: 0.75rem 0.5rem;
-    padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
-  }
-  .office-titlebar {
-    padding: 0 0.75rem;
-  }
-  .titlebar-doc-name {
-    font-size: 0.8rem;
-  }
-  .autosave-pill {
-    display: none;
-  }
-
-  .kpi-row {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-  }
-  .kpi-card {
-    padding: 0.65rem 0.75rem;
-  }
-  .kpi-value {
-    font-size: 1.35rem;
-  }
-
-  /* Responsive Excel Cards */
-  .table-responsive {
-    border: none;
-    background: transparent;
-  }
-  .data-table thead {
-    display: none;
-  }
-  .data-table,
-  .data-table tbody,
-  .data-table tr,
-  .data-table td {
-    display: block;
-    width: 100%;
-  }
-  .data-table td {
-    padding: 0.35rem 0;
-    border: none;
-  }
-  .record-row {
-    background: var(--bg-card);
-    border: 1px solid var(--border-grid);
-    border-radius: var(--radius-fluent);
-    padding: 0.85rem;
-    margin-bottom: 0.75rem;
-    box-shadow: var(--shadow-card);
-  }
-  .col-time {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border-grid) !important;
-    padding-bottom: 0.4rem !important;
-    margin-bottom: 0.4rem;
-  }
-  .col-actions {
-    border-top: 1px solid var(--border-grid) !important;
-    padding-top: 0.5rem !important;
-    margin-top: 0.5rem;
-    text-align: right;
-  }
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
+  top: 6px;
+  right: calc(50% - 16px);
+  background-color: var(--status-alarm);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.05rem 0.35rem;
+  border-radius: var(--radius-full);
 }

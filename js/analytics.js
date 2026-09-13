@@ -1,162 +1,149 @@
 /**
- * Analytics and Trends module for Boiler Lab
- * Оформление графиков в стиле Microsoft Excel Charts
+ * Analytics and Chart.js integration
+ * Clean Microsoft Blue & High-Contrast Palette
  */
 
-let phChartInstance = null;
-let o2ChartInstance = null;
-let hardnessChartInstance = null;
-let summaryPieChartInstance = null;
-
 const Analytics = {
-  // Цветовая палитра классических диаграмм Microsoft Excel
-  getThemeColors() {
-    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-    return {
-      isLight,
-      textColor: isLight ? '#595959' : '#c8c6c4',
-      legendColor: isLight ? '#262626' : '#f3f2f1',
-      gridColor: isLight ? '#d9d9d9' : '#3b3a39',
-      pieBorder: isLight ? '#ffffff' : '#252423',
-      excelBlue: '#4472c4',
-      excelOrange: '#ed7d31',
-      excelGreen: '#70ad47',
-      excelRed: '#c00000',
-      excelYellow: '#ffc000'
-    };
+  charts: {},
+
+  init() {
+    // Charts initialize on demand
   },
 
-  destroyChart(instance) {
-    if (instance && typeof instance.destroy === 'function') {
-      try {
-        instance.destroy();
-      } catch (e) {
-        console.warn('Ошибка при сбросе графика:', e);
-      }
-    }
-    return null;
+  getChartColors() {
+    const isDark = (document.documentElement.getAttribute('data-theme') === 'dark');
+    return {
+      text: isDark ? '#94a3b8' : '#64748b',
+      grid: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)',
+      primary: isDark ? '#38bdf8' : '#0078d4',
+      primaryBg: isDark ? 'rgba(56, 189, 248, 0.15)' : 'rgba(0, 120, 212, 0.12)',
+      warning: '#f59e0b',
+      warningBg: 'rgba(245, 158, 11, 0.15)',
+      alarm: '#ef4444',
+      alarmBg: 'rgba(239, 68, 68, 0.15)',
+      emerald: '#10b981',
+      emeraldBg: 'rgba(16, 185, 129, 0.15)'
+    };
   },
 
   render() {
     if (typeof Chart === 'undefined') return;
 
-    try {
-      this.renderPhTrend();
-      this.renderO2Trend();
-      this.renderHardnessTrend();
-      this.renderQualityPie();
-    } catch (err) {
-      console.error('Ошибка рендеринга аналитических графиков:', err);
-    }
+    this.renderPhChart();
+    this.renderO2Chart();
+    this.renderHardnessChart();
+    this.renderQualityPie();
   },
 
-  // 1. График тренда pH (Excel Blue & Excel Orange)
-  renderPhTrend() {
-    const canvas = document.getElementById('chartPh');
-    if (!canvas) return;
+  handleResize() {
+    Object.values(this.charts).forEach(ch => {
+      if (ch && typeof ch.resize === 'function') ch.resize();
+    });
+  },
 
-    phChartInstance = this.destroyChart(phChartInstance);
-    const theme = this.getThemeColors();
+  renderPhChart() {
+    const ctx = document.getElementById('chartPh')?.getContext('2d');
+    if (!ctx) return;
 
-    const sorted = [...AppState.records].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-    const feedPoints = sorted.filter(r => r.pointId === 'feed' && r.values?.ph !== undefined);
-    const boilerPoints = sorted.filter(r => r.pointId === 'boiler' && r.values?.ph !== undefined);
+    const colors = this.getChartColors();
+    const sorted = [...AppState.records].sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+    
+    // Питательная и котловая вода
+    const feedPoints = sorted.filter(r => r.pointId === 'feed' && r.values && r.values.ph !== undefined);
+    const boilerPoints = sorted.filter(r => r.pointId === 'boiler' && r.values && r.values.ph !== undefined);
 
-    const labels = Array.from(new Set([...feedPoints, ...boilerPoints].map(r => `${r.date.slice(5)} ${r.time}`)));
-    const feedDataMap = new Map(feedPoints.map(r => [`${r.date.slice(5)} ${r.time}`, r.values.ph]));
-    const boilerDataMap = new Map(boilerPoints.map(r => [`${r.date.slice(5)} ${r.time}`, r.values.ph]));
+    const labels = [...new Set([...feedPoints.map(r => `${r.date.slice(5)} ${r.time}`), ...boilerPoints.map(r => `${r.date.slice(5)} ${r.time}`)])].slice(-10);
 
-    const ctx = canvas.getContext('2d');
-    phChartInstance = new Chart(ctx, {
+    const feedData = labels.map(lbl => {
+      const rec = feedPoints.find(r => `${r.date.slice(5)} ${r.time}` === lbl);
+      return rec ? rec.values.ph : null;
+    });
+
+    const boilerData = labels.map(lbl => {
+      const rec = boilerPoints.find(r => `${r.date.slice(5)} ${r.time}` === lbl);
+      return rec ? rec.values.ph : null;
+    });
+
+    if (this.charts.ph) this.charts.ph.destroy();
+
+    this.charts.ph = new Chart(ctx, {
       type: 'line',
       data: {
-        labels,
+        labels: labels.length ? labels : ['Нет данных'],
         datasets: [
           {
-            label: 'Питательная вода (норма 8.5–9.5)',
-            data: labels.map(l => feedDataMap.get(l) ?? null),
-            borderColor: theme.excelBlue,
-            backgroundColor: theme.excelBlue,
+            label: 'Питательная вода (норма 8.5–9.2)',
+            data: feedData.length ? feedData : [null],
+            borderColor: colors.primary,
+            backgroundColor: colors.primaryBg,
+            tension: 0.3,
+            fill: false,
             borderWidth: 2,
             pointRadius: 4,
-            pointHoverRadius: 6,
-            tension: 0.1,
-            fill: false,
-            spanGaps: true
+            pointBackgroundColor: colors.primary
           },
           {
-            label: 'Котловая вода (норма 9.3–11.2)',
-            data: labels.map(l => boilerDataMap.get(l) ?? null),
-            borderColor: theme.excelOrange,
-            backgroundColor: theme.excelOrange,
+            label: 'Котловая вода (норма 9.0–11.5)',
+            data: boilerData.length ? boilerData : [null],
+            borderColor: colors.warning,
+            backgroundColor: colors.warningBg,
+            tension: 0.3,
+            fill: false,
             borderWidth: 2,
             pointRadius: 4,
-            pointHoverRadius: 6,
-            tension: 0.1,
-            fill: false,
-            spanGaps: true
+            pointBackgroundColor: colors.warning
           }
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-          legend: { labels: { color: theme.legendColor, font: { family: "'Segoe UI', sans-serif", weight: '600' } } }
-        },
         scales: {
-          x: { ticks: { color: theme.textColor }, grid: { color: theme.gridColor } },
-          y: {
-            min: 7.0,
-            max: 12.0,
-            ticks: { color: theme.textColor },
-            grid: { color: theme.gridColor },
-            title: { display: true, text: 'pH', color: theme.textColor }
-          }
+          x: { ticks: { color: colors.text }, grid: { color: colors.grid } },
+          y: { min: 7, max: 12, ticks: { color: colors.text }, grid: { color: colors.grid } }
+        },
+        plugins: {
+          legend: { labels: { color: colors.text, font: { size: 11 } } }
         }
       }
     });
   },
 
-  // 2. Кислород O2
-  renderO2Trend() {
-    const canvas = document.getElementById('chartO2');
-    if (!canvas) return;
+  renderO2Chart() {
+    const ctx = document.getElementById('chartO2')?.getContext('2d');
+    if (!ctx) return;
 
-    o2ChartInstance = this.destroyChart(o2ChartInstance);
-    const theme = this.getThemeColors();
-
-    const feedPoints = [...AppState.records]
-      .filter(r => r.pointId === 'feed' && r.values?.o2 !== undefined)
-      .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    const colors = this.getChartColors();
+    const sorted = [...AppState.records].sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+    const feedPoints = sorted.filter(r => r.pointId === 'feed' && r.values && r.values.o2 !== undefined).slice(-10);
 
     const labels = feedPoints.map(r => `${r.date.slice(5)} ${r.time}`);
-    const values = feedPoints.map(r => r.values.o2);
-    const limitNorm = labels.map(() => 20.0);
+    const o2Data = feedPoints.map(r => r.values.o2);
 
-    const ctx = canvas.getContext('2d');
-    o2ChartInstance = new Chart(ctx, {
+    if (this.charts.o2) this.charts.o2.destroy();
+
+    this.charts.o2 = new Chart(ctx, {
       type: 'line',
       data: {
-        labels,
+        labels: labels.length ? labels : ['Нет данных'],
         datasets: [
           {
-            label: 'Замер O₂ (мкг/дм³)',
-            data: values,
-            borderColor: theme.excelGreen,
-            backgroundColor: theme.excelGreen,
+            label: 'Кислород O₂ (мкг/дм³)',
+            data: o2Data.length ? o2Data : [null],
+            borderColor: colors.alarm,
+            backgroundColor: colors.alarmBg,
+            tension: 0.25,
+            fill: true,
             borderWidth: 2,
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            tension: 0.1,
-            fill: false
+            pointRadius: 4,
+            pointBackgroundColor: colors.alarm
           },
           {
-            label: 'Предел нормы ПТЭ ТЭ (≤ 20 мкг/дм³)',
-            data: limitNorm,
-            borderColor: theme.excelRed,
-            borderDash: [5, 4],
-            borderWidth: 2,
+            label: 'Предельная норма ПТЭ ТЭ (20 мкг/дм³)',
+            data: labels.map(() => 20),
+            borderColor: colors.text,
+            borderDash: [5, 5],
+            borderWidth: 1.5,
             pointRadius: 0,
             fill: false
           }
@@ -165,105 +152,83 @@ const Analytics = {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-          legend: { labels: { color: theme.legendColor, font: { family: "'Segoe UI', sans-serif", weight: '600' } } }
-        },
         scales: {
-          x: { ticks: { color: theme.textColor }, grid: { color: theme.gridColor } },
-          y: {
-            min: 0,
-            ticks: { color: theme.textColor },
-            grid: { color: theme.gridColor },
-            title: { display: true, text: 'мкг/дм³', color: theme.textColor }
-          }
+          x: { ticks: { color: colors.text }, grid: { color: colors.grid } },
+          y: { min: 0, max: 35, ticks: { color: colors.text }, grid: { color: colors.grid } }
+        },
+        plugins: {
+          legend: { labels: { color: colors.text, font: { size: 11 } } }
         }
       }
     });
   },
 
-  // 3. Жесткость ХВО
-  renderHardnessTrend() {
-    const canvas = document.getElementById('chartHardness');
-    if (!canvas) return;
+  renderHardnessChart() {
+    const ctx = document.getElementById('chartHardness')?.getContext('2d');
+    if (!ctx) return;
 
-    hardnessChartInstance = this.destroyChart(hardnessChartInstance);
-    const theme = this.getThemeColors();
-
-    const softPoints = [...AppState.records]
-      .filter(r => r.pointId === 'soft' && r.values?.hardness !== undefined)
-      .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    const colors = this.getChartColors();
+    const sorted = [...AppState.records].sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+    const softPoints = sorted.filter(r => r.pointId === 'soft' && r.values && r.values.hardness !== undefined).slice(-10);
 
     const labels = softPoints.map(r => `${r.date.slice(5)} ${r.time}`);
-    const softValues = softPoints.map(r => r.values.hardness);
-    const limitSoft = labels.map(() => 15.0);
+    const hardnessData = softPoints.map(r => r.values.hardness);
 
-    const ctx = canvas.getContext('2d');
-    hardnessChartInstance = new Chart(ctx, {
+    if (this.charts.hardness) this.charts.hardness.destroy();
+
+    this.charts.hardness = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels,
+        labels: labels.length ? labels : ['Нет данных'],
         datasets: [
           {
-            label: 'Жесткость фильтратов ХВО (мкг-экв/дм³)',
-            data: softValues,
-            backgroundColor: softValues.map(v => v > 15 ? theme.excelRed : (v > 10 ? theme.excelOrange : theme.excelBlue)),
-            borderWidth: 1,
-            borderColor: 'rgba(0,0,0,0.1)'
-          },
-          {
-            type: 'line',
-            label: 'Предел до регенерации (15 мкг-экв/дм³)',
-            data: limitSoft,
-            borderColor: theme.excelRed,
-            borderDash: [4, 4],
-            borderWidth: 2,
-            fill: false,
-            pointRadius: 0
+            label: 'Жесткость фильтрата ХВО (мкг-экв/дм³)',
+            data: hardnessData.length ? hardnessData : [null],
+            backgroundColor: hardnessData.map(v => v > 15 ? colors.alarm : (v > 10 ? colors.warning : colors.emerald)),
+            borderRadius: 4
           }
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-          legend: { labels: { color: theme.legendColor, font: { family: "'Segoe UI', sans-serif", weight: '600' } } }
-        },
         scales: {
-          x: { ticks: { color: theme.textColor }, grid: { color: theme.gridColor } },
-          y: {
-            min: 0,
-            ticks: { color: theme.textColor },
-            grid: { color: theme.gridColor },
-            title: { display: true, text: 'мкг-экв/дм³', color: theme.textColor }
-          }
+          x: { ticks: { color: colors.text }, grid: { color: colors.grid } },
+          y: { min: 0, max: 25, ticks: { color: colors.text }, grid: { color: colors.grid } }
+        },
+        plugins: {
+          legend: { labels: { color: colors.text, font: { size: 11 } } }
         }
       }
     });
   },
 
-  // 4. Круговая диаграмма качества анализов
   renderQualityPie() {
-    const canvas = document.getElementById('chartQualityPie');
-    if (!canvas) return;
+    const ctx = document.getElementById('chartQualityPie')?.getContext('2d');
+    if (!ctx) return;
 
-    summaryPieChartInstance = this.destroyChart(summaryPieChartInstance);
-    const theme = this.getThemeColors();
+    const colors = this.getChartColors();
+    let normal = 0, warn = 0, alarm = 0;
 
-    const normal = AppState.records.filter(r => r.status === 'normal').length;
-    const warn = AppState.records.filter(r => r.status === 'warning').length;
-    const alarm = AppState.records.filter(r => r.status === 'alarm').length;
+    AppState.records.forEach(r => {
+      const v = AppState.validateRecord(r);
+      if (v.status === 'alarm') alarm++;
+      else if (v.status === 'warning') warn++;
+      else normal++;
+    });
 
-    const ctx = canvas.getContext('2d');
-    summaryPieChartInstance = new Chart(ctx, {
+    if (this.charts.quality) this.charts.quality.destroy();
+
+    this.charts.quality = new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: ['В норме', 'Предупреждение', 'Нарушение нормы'],
+        labels: ['В норме', 'Предупреждения', 'Брак / Авария'],
         datasets: [
           {
-            data: [normal, warn, alarm],
-            backgroundColor: [theme.excelGreen, theme.excelOrange, theme.excelRed],
+            data: (normal + warn + alarm > 0) ? [normal, warn, alarm] : [1, 0, 0],
+            backgroundColor: [colors.emerald, colors.warning, colors.alarm],
             borderWidth: 2,
-            borderColor: theme.pieBorder
+            borderColor: (document.documentElement.getAttribute('data-theme') === 'dark') ? '#1e293b' : '#ffffff'
           }
         ]
       },
@@ -271,20 +236,9 @@ const Analytics = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'bottom', labels: { color: theme.legendColor, font: { family: "'Segoe UI', sans-serif", weight: '600' } } }
+          legend: { position: 'bottom', labels: { color: colors.text, font: { size: 11 } } }
         }
       }
     });
-  },
-
-  handleResize() {
-    try {
-      if (phChartInstance) phChartInstance.resize();
-      if (o2ChartInstance) o2ChartInstance.resize();
-      if (hardnessChartInstance) hardnessChartInstance.resize();
-      if (summaryPieChartInstance) summaryPieChartInstance.resize();
-    } catch (e) {
-      console.warn('Ошибка при ресайзе графиков:', e);
-    }
   }
 };
