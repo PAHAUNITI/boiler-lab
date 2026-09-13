@@ -1,15 +1,15 @@
 /**
  * Main Controller for Boiler Lab App (ВХР)
- * Инициализация, маршрутизация вкладок, переключение тем и поддержка мобильных устройств
+ * Microsoft 365 & Excel Fluent Architecture
  */
 
 const App = {
   currentTab: 'journal',
   currentCalcSubtab: 'blowdown',
 
-  // Переключение светлой / тёмной темы
+  // Переключение светлой / тёмной темы Office
   toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
     const next = current === 'dark' ? 'light' : 'dark';
     this.applyTheme(next);
   },
@@ -19,90 +19,133 @@ const App = {
     AppState.settings.theme = theme;
     AppState.save();
 
-    // Обновляем текст и иконки на кнопках темы
-    const btns = document.querySelectorAll('.btn-theme-toggle');
-    btns.forEach(btn => {
-      if (theme === 'light') {
-        btn.innerHTML = '🌙 <span class="theme-label">Ночь</span>';
-        btn.title = 'Переключить на ночную (SCADA) тему';
+    // Обновляем кнопку темы в шапке
+    const btn = document.getElementById('titlebarThemeBtn');
+    if (btn) {
+      if (theme === 'dark') {
+        btn.innerHTML = '☀️ <span class="theme-text-lbl">День</span>';
+        btn.title = 'Переключить на классическую светлую тему Excel';
       } else {
-        btn.innerHTML = '☀️ <span class="theme-label">День</span>';
-        btn.title = 'Переключить на дневную (светлую) тему';
+        btn.innerHTML = '🌙 <span class="theme-text-lbl">Ночь</span>';
+        btn.title = 'Переключить на темный режим Office Dark';
       }
-    });
-
-    // Метатег theme-color для мобильных браузеров
-    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-    if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', theme === 'light' ? '#f1f5f9' : '#0b1120');
     }
 
-    // Если открыта вкладка аналитики — перерисовываем графики с новой палитрой
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) {
+      metaTheme.setAttribute('content', theme === 'dark' ? '#0e5b30' : '#107c41');
+    }
+
     if (window.Analytics && typeof window.Analytics.render === 'function') {
       window.Analytics.render();
     }
   },
 
-  // Инициализация темы с учетом настроек или системного предпочтения
   initTheme() {
     let preferredTheme = AppState.settings.theme;
     if (!preferredTheme) {
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      preferredTheme = prefersDark ? 'dark' : 'light';
+      preferredTheme = 'light'; // По умолчанию в стиле классического Excel
     }
     this.applyTheme(preferredTheme);
-
-    // Слушатель системной смены темы (если пользователь не переключал вручную)
-    if (window.matchMedia) {
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        if (!localStorage.getItem(STORAGE_KEY)) {
-          this.applyTheme(e.matches ? 'dark' : 'light');
-        }
-      });
-    }
   },
 
-  // Переключение основных вкладок (синхронизация десктопного меню и мобильного Bottom Nav)
+  // Переключение вкладок ленты Ribbon
   switchTab(tabId) {
     this.currentTab = tabId;
 
-    // Обновляем верхние кнопки навигации (ПК)
-    document.querySelectorAll('.nav-tab').forEach(btn => {
+    // Обновляем вкладки на ленте Office
+    document.querySelectorAll('.ribbon-tab').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.tab === tabId);
     });
 
-    // Обновляем нижние кнопки навигации (Смартфон)
+    // Обновляем вкладки на мобильном Bottom Nav
     document.querySelectorAll('.bottom-nav-item').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.tab === tabId);
     });
 
-    // Обновляем контейнеры вкладок
+    // Переключаем контейнеры листов
     document.querySelectorAll('.tab-pane').forEach(pane => {
       pane.classList.toggle('active', pane.id === `tab-${tabId}`);
     });
 
-    // Хэш в URL
+    // Обновляем строку формулы Excel в зависимости от раздела
+    const cellNameEl = document.getElementById('excelCellName');
+    const formulaInput = document.getElementById('excelFormulaInput');
+    if (cellNameEl && formulaInput) {
+      switch (tabId) {
+        case 'journal':
+          cellNameEl.textContent = 'A1: ВХР_СМЕНА';
+          formulaInput.value = `=ВПР("ВХР_Котельная"; Журнал!A1:N${AppState.records.length + 1}; "Статус: В норме")`;
+          break;
+        case 'calculators':
+          cellNameEl.textContent = 'B4: ПРОДУВКА_P';
+          formulaInput.value = '=(S_пит / (S_котл - S_пит)) * 100%';
+          break;
+        case 'reminders':
+          cellNameEl.textContent = 'C2: РЕГЛАМЕНТ';
+          formulaInput.value = '=ТАЙМЕР(Интервал=120мин; "Контроль O2 деаэратора")';
+          break;
+        case 'analytics':
+          cellNameEl.textContent = 'D1: ДИАГРАММА_pH';
+          formulaInput.value = '=ДИАГРАММА(Тренды!pH_Питательная:pH_Котловая; Шаг="2ч")';
+          break;
+        case 'settings':
+          cellNameEl.textContent = 'E1: УСТАВКИ_ПТЭ';
+          formulaInput.value = '=НОРМЫ_ПТЭ_ТЭ(ГОСТ_20995_75; "Предел O2 <= 20 мкг/дм3")';
+          break;
+      }
+    }
+
     if (window.location.hash !== `#${tabId}`) {
       window.history.replaceState(null, null, `#${tabId}`);
     }
 
-    // Прокрутка наверх экрана при переключении
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // Отрисовка графиков при входе на вкладку аналитики
     if (tabId === 'analytics' && window.Analytics) {
-      setTimeout(() => {
-        window.Analytics.render();
-      }, 50);
+      setTimeout(() => window.Analytics.render(), 40);
     }
-
-    // Актуализация напоминалок
     if (tabId === 'reminders' && window.Reminders) {
       window.Reminders.render();
     }
   },
 
-  // Переключение подвкладок калькулятора
+  // Фильтрация по нижним вкладкам Excel (Лист 1: Все, Лист 2: Отклонения)
+  filterBySheet(sheetType) {
+    if (this.currentTab !== 'journal') {
+      this.switchTab('journal');
+    }
+
+    const tabAll = document.getElementById('sheetTabAll');
+    const tabAlarm = document.getElementById('sheetTabAlarm');
+    const filterStatus = document.getElementById('filterStatus');
+
+    if (sheetType === 'alarm') {
+      if (tabAll) tabAll.classList.remove('active');
+      if (tabAlarm) tabAlarm.classList.add('active');
+      if (filterStatus) filterStatus.value = 'alarm';
+      Journal.currentFilter.status = 'alarm';
+    } else {
+      if (tabAll) tabAll.classList.add('active');
+      if (tabAlarm) tabAlarm.classList.remove('active');
+      if (filterStatus) filterStatus.value = 'all';
+      Journal.currentFilter.status = 'all';
+    }
+
+    Journal.render();
+  },
+
+  // Быстрый поиск в строке заголовка Office (Tell Me / Search)
+  onQuickSearch(text) {
+    if (this.currentTab !== 'journal') {
+      this.switchTab('journal');
+    }
+    const searchInput = document.getElementById('filterSearch');
+    if (searchInput) {
+      searchInput.value = text;
+    }
+    Journal.currentFilter.search = text;
+    Journal.render();
+  },
+
   switchCalcSubtab(subtabId) {
     this.currentCalcSubtab = subtabId;
     document.querySelectorAll('.calc-subtab').forEach(btn => {
@@ -113,7 +156,6 @@ const App = {
     });
   },
 
-  // Привязка обработчиков калькуляторов
   bindCalculators() {
     // 1. Продувка
     const calcBlowdown = () => {
@@ -131,18 +173,18 @@ const App = {
         const badgeCls = res.status === 'warning' ? 'val-warn' : 'val-ok';
         resPanel.innerHTML = `
           <div class="res-row">
-            <span class="res-label">Величина непрерывной продувки (P):</span>
+            <span class="res-label">Величина продувки (P):</span>
             <span class="res-value ${badgeCls}">${res.percent} %</span>
           </div>
           <div class="res-row">
-            <span class="res-label">Часовой расход продувки (Gпрод):</span>
+            <span class="res-label">Расход продувочной воды (Gпрод):</span>
             <span class="res-value">${res.flowRate} т/ч</span>
           </div>
           <div class="res-row">
-            <span class="res-label">Ориентировочные тепловые потери:</span>
+            <span class="res-label">Тепловые потери с продувкой:</span>
             <span class="res-value">${res.heatLossGcal} Гкал/ч</span>
           </div>
-          <div class="mt-2 text-muted" style="font-size: 0.82rem; border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
+          <div class="mt-2 text-muted" style="font-size: 0.78rem; border-top: 1px solid var(--border-grid); padding-top: 0.4rem;">
             💡 <em>${res.advice}</em>
           </div>
         `;
@@ -155,7 +197,7 @@ const App = {
     });
     calcBlowdown();
 
-    // 2. Фильтроцикл ХВО
+    // 2. ХВО
     const calcFilter = () => {
       const resinVol = document.getElementById('calcResinVol')?.value;
       const resinCap = document.getElementById('calcResinCap')?.value;
@@ -172,7 +214,7 @@ const App = {
       } else {
         resPanel.innerHTML = `
           <div class="res-row">
-            <span class="res-label">Объем воды за один фильтроцикл (Vф):</span>
+            <span class="res-label">Объем воды за фильтроцикл (Vф):</span>
             <span class="res-value">${res.waterVolume} м³</span>
           </div>
           <div class="res-row">
@@ -180,11 +222,11 @@ const App = {
             <span class="res-value">${res.cycleHours} ч (~${res.cycleDays} сут.)</span>
           </div>
           <div class="res-row">
-            <span class="res-label">Потребность чистой соли (NaCl):</span>
+            <span class="res-label">Расход соли на регенерацию:</span>
             <span class="res-value">${res.saltKg} кг</span>
           </div>
           <div class="res-row">
-            <span class="res-label">Объем 8-10% раствора соли:</span>
+            <span class="res-label">Объем 8–10% рассола NaCl:</span>
             <span class="res-value">${res.brineVolumeM3} м³ (${res.brineLiters} л)</span>
           </div>
         `;
@@ -209,7 +251,7 @@ const App = {
         } else {
           sulfPanel.innerHTML = `
             <div class="res-row">
-              <span class="res-label">Расход сульфита (Na₂SO₃):</span>
+              <span class="res-label">Часовой расход Na₂SO₃:</span>
               <span class="res-value">${sulfRes.gramPerHour} г/ч</span>
             </div>
             <div class="res-row">
@@ -248,7 +290,7 @@ const App = {
     });
     calcReagents();
 
-    // 4. Конвертер жесткости
+    // 4. Конвертер
     const calcConverter = () => {
       const hardVal = document.getElementById('calcConvHardVal')?.value;
       const fromUnit = document.getElementById('calcConvHardUnit')?.value;
@@ -302,15 +344,17 @@ const App = {
     const normContainer = document.getElementById('normsReferenceContainer');
     if (normContainer) {
       normContainer.innerHTML = Object.entries(SAMPLE_POINTS).map(([pointId, p]) => `
-        <div class="norm-point-block" style="margin-bottom: 1.25rem; background: var(--bg-main); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
-          <h4 style="color: var(--color-primary); margin-bottom: 0.5rem;">${p.icon} ${p.name} <small style="color: var(--text-muted); font-weight: normal;">(${p.desc})</small></h4>
-          <table class="data-table" style="font-size: 0.8rem;">
+        <div style="margin-bottom: 1rem; background: var(--bg-window); padding: 0.75rem; border-radius: 4px; border: 1px solid var(--border-grid);">
+          <h4 style="color: var(--ms-excel-green); margin-bottom: 0.35rem; font-size: 0.85rem;">
+            ${p.icon} ${p.name} <small style="color: var(--text-muted); font-weight: normal;">(${p.desc})</small>
+          </h4>
+          <table class="data-table" style="font-size: 0.78rem;">
             <thead>
               <tr>
                 <th>Параметр</th>
                 <th>Единицы</th>
-                <th>Мин. норма</th>
-                <th>Макс. норма</th>
+                <th>Мин.</th>
+                <th>Макс.</th>
                 <th>Предупреждение</th>
                 <th>Норматив</th>
               </tr>
@@ -345,15 +389,11 @@ const App = {
     if (soundToggle) AppState.settings.soundEnabled = soundToggle.checked;
 
     AppState.save();
-
-    const facEl = document.getElementById('brandFacilityName');
-    if (facEl) facEl.textContent = AppState.settings.facilityName;
-
-    alert('Настройки успешно сохранены!');
+    alert('Параметры успешно сохранены в книге Excel!');
   },
 
   resetToDemo() {
-    if (!confirm('Внимание! Все текущие записи будут заменены демонстрационными данными за последние смены. Продолжить?')) return;
+    if (!confirm('Сбросить данные книги к демонстрационному набору?')) return;
     AppState.loadDemoRecords();
     AppState.save();
     window.location.reload();
@@ -388,7 +428,7 @@ const App = {
     const notes = document.getElementById('newRemNotes')?.value.trim();
 
     if (!title) {
-      alert('Укажите название регламентной задачи!');
+      alert('Укажите название задачи!');
       return;
     }
 
@@ -403,26 +443,15 @@ const App = {
   },
 
   init() {
-    // 1. Загрузка данных
     AppState.load();
-
-    // 2. Инициализация светлой/тёмной темы
     this.initTheme();
 
-    // 3. Шапка
-    const facEl = document.getElementById('brandFacilityName');
-    if (facEl) facEl.textContent = AppState.settings.facilityName;
-
-    // 4. Модули
     if (window.Journal) window.Journal.init();
     if (window.Reminders) window.Reminders.init();
     this.bindCalculators();
     this.initSettingsPage();
-
-    // 5. Роутинг
     this.checkUrlTab();
 
-    // 6. Ресайз
     window.addEventListener('resize', () => {
       if (window.Analytics) window.Analytics.handleResize();
     });
@@ -434,14 +463,7 @@ const App = {
       }
     });
 
-    // Регистрация Service Worker для PWA (при запуске через HTTP-сервер)
-    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
-      navigator.serviceWorker.register('./sw.js').catch(err => {
-        // Оффлайн fallback без ошибки
-      });
-    }
-
-    console.log('✅ Лаборатория ВХР успешно запущена (Тема:', AppState.settings.theme, ')');
+    console.log('✅ Microsoft Excel ВХР успешно запущен (Тема:', AppState.settings.theme, ')');
   }
 };
 

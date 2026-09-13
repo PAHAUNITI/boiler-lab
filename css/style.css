@@ -1,104 +1,101 @@
 /* ==========================================================================
-   Boiler Water Chemistry Lab (ВХР) - Modern Sci-Fi High-Tech SCADA Dashboard
-   Deep Obsidian Ambient Glow & Glassmorphism Aesthetics
+   Boiler Water Chemistry Lab (ВХР) - Microsoft 365 & Excel Fluent Design
+   Официальный стиль Microsoft Office (Excel / Word / Fluent UI)
    ========================================================================== */
 
-/* --- DARK THEME: High-Tech Cyber-Lab (Глубокий обсидиан + Неоновый циан и изумруд) --- */
+/* --- EXCEL LIGHT THEME (Классический Microsoft Office) --- */
 :root,
-[data-theme="dark"] {
-  --bg-main: #050811;
-  --bg-card: rgba(13, 20, 38, 0.72);
-  --bg-card-hover: rgba(18, 28, 52, 0.85);
-  --bg-card-solid: #0c1426;
-  --bg-input: rgba(6, 10, 22, 0.8);
-  --border-color: rgba(56, 189, 248, 0.14);
-  --border-focus: #38bdf8;
-  --border-glow: rgba(56, 189, 248, 0.35);
+[data-theme="light"] {
+  --ms-excel-green: #107c41;
+  --ms-excel-darkgreen: #0b5a2f;
+  --ms-excel-lightgreen: #21a366;
+  --ms-excel-subtle: #dff6dd;
   
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
+  --bg-window: #f3f2f1;
+  --bg-card: #ffffff;
+  --bg-card-hover: #faf9f8;
+  --bg-input: #ffffff;
   
-  --header-bg: rgba(9, 14, 28, 0.85);
-  --table-th-bg: rgba(6, 10, 20, 0.9);
-  --chip-bg: rgba(15, 23, 42, 0.6);
-  --chip-border: rgba(255, 255, 255, 0.08);
-  --modal-overlay: rgba(2, 4, 10, 0.8);
-
-  --color-primary: #0284c7;
-  --color-primary-hover: #0369a1;
-  --color-primary-light: rgba(56, 189, 248, 0.16);
-  --accent-cyan: #00f2fe;
-  --accent-indigo: #6366f1;
+  --border-color: #edebe9;
+  --border-grid: #e1dfdd;
+  --border-dark: #8a8886;
+  --border-focus: #107c41;
   
-  --status-normal: #10b981;
-  --status-normal-bg: rgba(16, 185, 129, 0.14);
-  --status-normal-glow: rgba(16, 185, 129, 0.35);
+  --text-main: #201f1e;
+  --text-muted: #605e5c;
+  --text-dim: #a19f9d;
   
-  --status-warn: #f59e0b;
-  --status-warn-bg: rgba(245, 158, 11, 0.14);
-  --status-warn-glow: rgba(245, 158, 11, 0.35);
+  --header-bg: #107c41;
+  --header-text: #ffffff;
+  --ribbon-bg: #ffffff;
+  --formula-bar-bg: #ffffff;
+  --table-th-bg: #f3f2f1;
+  --sheet-bar-bg: #f3f2f1;
+  --sheet-tab-active: #ffffff;
   
-  --status-alarm: #ef4444;
-  --status-alarm-bg: rgba(239, 68, 68, 0.18);
-  --status-alarm-glow: rgba(239, 68, 68, 0.45);
-
-  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-  --card-shadow-hover: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 22px rgba(14, 165, 233, 0.16);
-  --theme-icon: '☀️';
-  --theme-text: 'День';
+  --color-primary: #107c41;
+  --color-primary-hover: #0b5a2f;
+  
+  --status-normal: #107c41;
+  --status-normal-bg: #e6f4ea;
+  --status-warn: #b25e02;
+  --status-warn-bg: #fff8e5;
+  --status-alarm: #a80000;
+  --status-alarm-bg: #fde7e9;
+  
+  --shadow-fluent: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.13), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.1);
+  --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --modal-overlay: rgba(0, 0, 0, 0.4);
 }
 
-/* --- LIGHT THEME: Clean Crisp Clinical Lab (Чистая профессиональная светлая тема) --- */
-[data-theme="light"] {
-  --bg-main: #f8fafc;
-  --bg-card: rgba(255, 255, 255, 0.92);
-  --bg-card-hover: #ffffff;
-  --bg-card-solid: #ffffff;
-  --bg-input: #ffffff;
-  --border-color: #cbd5e1;
-  --border-focus: #0284c7;
-  --border-glow: rgba(2, 132, 199, 0.25);
+/* --- EXCEL DARK THEME (Office Dark / Black) --- */
+[data-theme="dark"] {
+  --ms-excel-green: #107c41;
+  --ms-excel-darkgreen: #0b5a2f;
+  --ms-excel-lightgreen: #21a366;
+  --ms-excel-subtle: rgba(16, 124, 65, 0.2);
   
-  --text-main: #0f172a;
-  --text-muted: #475569;
-  --text-dim: #64748b;
+  --bg-window: #1b1a19;
+  --bg-card: #252423;
+  --bg-card-hover: #2d2c2b;
+  --bg-input: #201f1e;
   
-  --header-bg: rgba(255, 255, 255, 0.92);
-  --table-th-bg: #f1f5f9;
-  --chip-bg: rgba(15, 23, 42, 0.04);
-  --chip-border: rgba(15, 23, 42, 0.08);
-  --modal-overlay: rgba(15, 23, 42, 0.55);
-
-  --color-primary: #0284c7;
-  --color-primary-hover: #0369a1;
-  --color-primary-light: rgba(2, 132, 199, 0.1);
-  --accent-cyan: #0284c7;
-  --accent-indigo: #4f46e5;
+  --border-color: #323130;
+  --border-grid: #3b3a39;
+  --border-dark: #605e5c;
+  --border-focus: #21a366;
   
-  --status-normal: #059669;
-  --status-normal-bg: rgba(5, 150, 105, 0.12);
-  --status-normal-glow: rgba(5, 150, 105, 0.2);
+  --text-main: #f3f2f1;
+  --text-muted: #c8c6c4;
+  --text-dim: #8a8886;
   
-  --status-warn: #d97706;
-  --status-warn-bg: rgba(217, 119, 6, 0.12);
-  --status-warn-glow: rgba(217, 119, 6, 0.2);
+  --header-bg: #0e5b30;
+  --header-text: #ffffff;
+  --ribbon-bg: #201f1e;
+  --formula-bar-bg: #252423;
+  --table-th-bg: #2b2a29;
+  --sheet-bar-bg: #1b1a19;
+  --sheet-tab-active: #292827;
   
-  --status-alarm: #dc2626;
-  --status-alarm-bg: rgba(220, 38, 38, 0.12);
-  --status-alarm-glow: rgba(220, 38, 38, 0.25);
-
-  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.1);
-  --theme-icon: '🌙';
-  --theme-text: 'Ночь';
+  --color-primary: #21a366;
+  --color-primary-hover: #107c41;
+  
+  --status-normal: #34d399;
+  --status-normal-bg: rgba(16, 185, 129, 0.15);
+  --status-warn: #fbbf24;
+  --status-warn-bg: rgba(245, 158, 11, 0.15);
+  --status-alarm: #f87171;
+  --status-alarm-bg: rgba(239, 68, 68, 0.2);
+  
+  --shadow-fluent: 0 2px 8px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --modal-overlay: rgba(0, 0, 0, 0.7);
 }
 
 :root {
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
+  --font-fluent: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'Consolas', 'Courier New', monospace;
+  --radius-fluent: 4px;
 }
 
 * {
@@ -109,164 +106,269 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: var(--bg-main);
+  font-family: var(--font-fluent);
+  background-color: var(--bg-window);
   color: var(--text-main);
-  line-height: 1.5;
+  line-height: 1.45;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  position: relative;
-}
-
-/* Эффект глубокого неонового градиента (Ambient Mesh Glow) в темной теме */
-[data-theme="dark"] body {
-  background-color: #050811;
-  background-image: 
-    radial-gradient(circle 800px at 15% 10%, rgba(14, 165, 233, 0.13), transparent 70%),
-    radial-gradient(circle 700px at 85% 85%, rgba(99, 102, 241, 0.12), transparent 70%),
-    radial-gradient(circle 500px at 50% 50%, rgba(16, 185, 129, 0.05), transparent 70%);
-  background-attachment: fixed;
-}
-
-[data-theme="light"] body {
-  background-color: #f8fafc;
-  background-image: 
-    radial-gradient(circle 600px at 10% 10%, rgba(2, 132, 199, 0.05), transparent 70%),
-    radial-gradient(circle 500px at 90% 90%, rgba(99, 102, 241, 0.04), transparent 70%);
-  background-attachment: fixed;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* ==========================================================================
-   Header & Navigation
+   MICROSOFT OFFICE TITLE BAR & RIBBON
    ========================================================================== */
-.app-header {
+.office-titlebar {
   background: var(--header-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border-color);
-  padding: 0.85rem 1.5rem;
+  color: var(--header-text);
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 1rem;
+  font-size: 0.84rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   position: sticky;
   top: 0;
-  z-index: 100;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  transition: all 0.3s ease;
+  z-index: 110;
 }
 
-.brand-section {
+.titlebar-left {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0.75rem;
 }
 
-.brand-logo {
-  font-size: 1.8rem;
-  background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(99, 102, 241, 0.25));
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  border-radius: var(--radius-md);
-  width: 46px;
-  height: 46px;
+.excel-icon-box {
+  background: #094723;
+  color: white;
+  width: 26px;
+  height: 26px;
+  border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 0 16px rgba(14, 165, 233, 0.25);
-  transition: transform 0.2s;
-}
-.brand-logo:hover {
-  transform: rotate(6deg) scale(1.05);
+  font-weight: 800;
+  font-size: 0.95rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
-.brand-title h1 {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  color: var(--text-main);
+.titlebar-doc-name {
+  font-weight: 600;
+  letter-spacing: 0.2px;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.brand-facility {
-  font-size: 0.78rem;
-  color: var(--text-muted);
+.autosave-pill {
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 0.7rem;
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-weight: normal;
 }
 
-.nav-tabs {
+.titlebar-search {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: white;
+  padding: 3px 12px;
+  border-radius: 14px;
+  font-size: 0.8rem;
+  width: 260px;
   display: flex;
-  gap: 0.35rem;
-  background: rgba(0, 0, 0, 0.25);
-  padding: 0.3rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(8px);
+  align-items: center;
+  gap: 6px;
 }
-
-.nav-tab {
+.titlebar-search input {
   background: transparent;
-  color: var(--text-muted);
   border: none;
-  padding: 0.55rem 1rem;
-  font-size: 0.88rem;
-  font-weight: 600;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  color: white;
+  outline: none;
+  font-size: 0.8rem;
+  width: 100%;
+}
+.titlebar-search input::placeholder {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.titlebar-right {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  position: relative;
-  white-space: nowrap;
+  gap: 0.6rem;
 }
 
-.nav-tab:hover {
-  color: var(--text-main);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.nav-tab.active {
-  background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-}
-
-/* Кнопка смены темы */
-.btn-theme-toggle {
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(99, 102, 241, 0.12));
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  color: var(--text-main);
-  padding: 0.5rem 0.95rem;
-  font-size: 0.88rem;
-  font-weight: 700;
-  border-radius: var(--radius-sm);
+.titlebar-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  padding: 3px 9px;
+  border-radius: 3px;
+  font-size: 0.78rem;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  transition: all 0.25s;
+  gap: 4px;
+  transition: background 0.15s;
 }
-.btn-theme-toggle:hover {
-  border-color: #38bdf8;
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
-  transform: translateY(-1px);
+.titlebar-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
 }
 
 /* ==========================================================================
-   Main Container
+   OFFICE RIBBON (Лента инструментов Microsoft Office)
+   ========================================================================== */
+.office-ribbon {
+  background: var(--ribbon-bg);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 42px;
+  z-index: 105;
+}
+
+.ribbon-tabs-bar {
+  display: flex;
+  padding: 0 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-window);
+}
+
+.ribbon-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.ribbon-tab:hover {
+  color: var(--text-main);
+  background: rgba(0, 0, 0, 0.04);
+}
+.ribbon-tab.active {
+  color: var(--ms-excel-green);
+  border-bottom-color: var(--ms-excel-green);
+  background: var(--ribbon-bg);
+}
+[data-theme="dark"] .ribbon-tab.active {
+  color: var(--ms-excel-lightgreen);
+  border-bottom-color: var(--ms-excel-lightgreen);
+}
+
+.ribbon-tools-panel {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  overflow-x: auto;
+  min-height: 62px;
+}
+
+.ribbon-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-right: 0.8rem;
+  border-right: 1px solid var(--border-color);
+}
+.ribbon-group:last-child {
+  border-right: none;
+}
+
+.ribbon-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-main);
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-fluent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 48px;
+  transition: all 0.15s;
+}
+.ribbon-btn .r-icon {
+  font-size: 1.15rem;
+}
+.ribbon-btn:hover {
+  background: var(--bg-window);
+  border-color: var(--border-grid);
+}
+.ribbon-btn-primary {
+  background: var(--ms-excel-green) !important;
+  color: white !important;
+  border-color: var(--ms-excel-green) !important;
+}
+.ribbon-btn-primary:hover {
+  filter: brightness(0.92);
+}
+
+/* ==========================================================================
+   FORMULA BAR (Строка формул Excel: fx)
+   ========================================================================== */
+.excel-formula-bar {
+  background: var(--formula-bar-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.35rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.name-box {
+  width: 120px;
+  padding: 2px 8px;
+  background: var(--bg-window);
+  border: 1px solid var(--border-grid);
+  border-radius: 2px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--ms-excel-green);
+  text-align: center;
+}
+[data-theme="dark"] .name-box {
+  color: var(--ms-excel-lightgreen);
+}
+
+.formula-fx-symbol {
+  font-style: italic;
+  font-weight: bold;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  user-select: none;
+}
+
+.formula-input-field {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  outline: none;
+  font-family: var(--font-fluent);
+  font-size: 0.82rem;
+}
+
+/* ==========================================================================
+   Main Content Layout
    ========================================================================== */
 .main-content {
   flex: 1;
-  padding: 1.75rem;
+  padding: 1rem 1.25rem;
   max-width: 1600px;
   margin: 0 auto;
   width: 100%;
@@ -274,538 +376,339 @@ body {
 
 .tab-pane {
   display: none;
-  animation: tabFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .tab-pane.active {
   display: block;
 }
 
-@keyframes tabFadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ==========================================================================
-   KPI Banner Cards (Сочные градиенты и неоновые цифры)
-   ========================================================================== */
+/* KPI Summary Cards (Excel Data Blocks) */
 .kpi-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 1.1rem;
-  margin-bottom: 1.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .kpi-card {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.1rem 1.35rem;
+  border: 1px solid var(--border-grid);
+  border-radius: var(--radius-fluent);
+  padding: 0.85rem 1.1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: var(--card-shadow);
-  transition: all 0.25s ease;
-  position: relative;
-  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  border-left: 4px solid var(--border-dark);
 }
-
-.kpi-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.5), transparent);
-  opacity: 0.6;
-}
-
-.kpi-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--border-glow);
-  box-shadow: var(--card-shadow-hover);
-}
+.kpi-card.kpi-total { border-left-color: #0078d4; }
+.kpi-card.kpi-normal { border-left-color: var(--status-normal); }
+.kpi-card.kpi-warn { border-left-color: var(--status-warn); }
+.kpi-card.kpi-alarm { border-left-color: var(--status-alarm); }
 
 .kpi-title {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
-  margin-bottom: 0.25rem;
-  font-weight: 700;
+  margin-bottom: 2px;
 }
-
 .kpi-value {
-  font-size: 2rem;
-  font-weight: 800;
-  font-family: var(--font-mono);
-  letter-spacing: -0.5px;
-}
-
-.kpi-icon {
-  font-size: 2.2rem;
-  opacity: 0.9;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
-}
-
-/* Неоновые градиенты на числах */
-[data-theme="dark"] .kpi-card:nth-child(1) .kpi-value {
-  background: linear-gradient(135deg, #38bdf8, #818cf8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-[data-theme="dark"] .kpi-card.kpi-normal .kpi-value {
-  background: linear-gradient(135deg, #34d399, #10b981);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.35));
-}
-[data-theme="dark"] .kpi-card.kpi-warn .kpi-value {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.35));
-}
-[data-theme="dark"] .kpi-card.kpi-alarm .kpi-value {
-  background: linear-gradient(135deg, #f43f5e, #ef4444);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 14px rgba(239, 68, 68, 0.45));
-}
-
-[data-theme="light"] .kpi-card.kpi-normal .kpi-value { color: var(--status-normal); }
-[data-theme="light"] .kpi-card.kpi-warn .kpi-value { color: var(--status-warn); }
-[data-theme="light"] .kpi-card.kpi-alarm .kpi-value { color: var(--status-alarm); }
-
-/* ==========================================================================
-   Buttons & Inputs
-   ========================================================================== */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.88rem;
+  font-size: 1.7rem;
   font-weight: 700;
-  border-radius: var(--radius-sm);
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  text-decoration: none;
-  min-height: 40px;
+  font-family: var(--font-mono);
 }
+.kpi-card.kpi-normal .kpi-value { color: var(--status-normal); }
+.kpi-card.kpi-warn .kpi-value { color: var(--status-warn); }
+.kpi-card.kpi-alarm .kpi-value { color: var(--status-alarm); }
 
-.btn-primary {
-  background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 50%, #38bdf8 100%);
-  color: white;
-  border: none;
-  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);
-}
-.btn-primary:hover {
-  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.55);
-  transform: translateY(-1px);
-}
-
-.btn-success {
-  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-  color: white;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
-}
-.btn-success:hover {
-  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
-  transform: translateY(-1px);
-}
-
-.btn-secondary {
-  background: #1e293b;
-  color: #f1f5f9;
-  border: 1px solid var(--border-color);
-}
-.btn-secondary:hover {
-  background: #334155;
-  border-color: #64748b;
-}
-
-.btn-outline {
-  background: transparent;
-  border-color: var(--border-color);
-  color: var(--text-muted);
-}
-.btn-outline:hover {
-  border-color: #38bdf8;
-  color: var(--text-main);
-  background: var(--color-primary-light);
-}
-
-.btn-danger-outline {
-  background: transparent;
-  border-color: rgba(239, 68, 68, 0.4);
-  color: var(--status-alarm);
-}
-.btn-danger-outline:hover {
-  background: var(--status-alarm-bg);
-  border-color: var(--status-alarm);
-}
-
-.btn-sm {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.82rem;
-  min-height: 34px;
-}
-
-.btn-icon {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.45rem;
-  font-size: 1.1rem;
-  border-radius: var(--radius-sm);
-  transition: all 0.15s;
-  min-width: 36px;
-  min-height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.btn-icon:hover {
-  background: rgba(125, 125, 125, 0.15);
-  transform: scale(1.1);
-}
-.btn-icon-danger:hover {
-  background: var(--status-alarm-bg);
-}
-
-.form-control {
-  background: var(--bg-input);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 0.65rem 0.95rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.9rem;
-  width: 100%;
-  transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
-  min-height: 42px;
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px var(--color-primary-light);
-}
-
-.form-control.is-invalid {
-  border-color: var(--status-alarm) !important;
-  background-color: var(--status-alarm-bg);
-}
-.form-control.is-warning {
-  border-color: var(--status-warn) !important;
-  background-color: var(--status-warn-bg);
-}
-
-/* ==========================================================================
-   Toolbar & Filters
-   ========================================================================== */
+/* Excel Filter Toolbar */
 .toolbar-card {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.1rem;
-  margin-bottom: 1.35rem;
+  border: 1px solid var(--border-grid);
+  border-radius: var(--radius-fluent);
+  padding: 0.65rem 1rem;
+  margin-bottom: 0.85rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.75rem;
   align-items: center;
   justify-content: space-between;
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--shadow-card);
 }
 
 .filter-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.5rem;
   align-items: center;
 }
 
-.filter-item {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.85rem;
-  color: var(--text-muted);
+.filter-item select,
+.filter-item input {
+  background: var(--bg-input);
+  border: 1px solid var(--border-grid);
+  color: var(--text-main);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-fluent);
+  font-size: 0.82rem;
+  outline: none;
 }
-
-.filter-item select, .filter-item input {
-  width: auto;
-  min-width: 160px;
+.filter-item select:focus,
+.filter-item input:focus {
+  border-color: var(--border-focus);
 }
 
 /* ==========================================================================
-   Journal Table (Светящиеся бейджи и чипы)
+   EXCEL SPREADSHEET TABLE (Сетка электронной таблицы)
    ========================================================================== */
 .table-responsive {
-  overflow-x: auto;
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-grid);
+  border-radius: var(--radius-fluent);
+  box-shadow: var(--shadow-card);
+  overflow-x: auto;
 }
 
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.88rem;
-  text-align: left;
+  font-size: 0.82rem;
 }
 
 .data-table th {
   background: var(--table-th-bg);
   color: var(--text-muted);
   font-weight: 700;
-  padding: 0.95rem 1.1rem;
-  border-bottom: 1px solid var(--border-color);
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--border-grid);
   white-space: nowrap;
-  letter-spacing: 0.3px;
+  user-select: none;
 }
 
 .data-table td {
-  padding: 0.95rem 1.1rem;
-  border-bottom: 1px solid var(--border-color);
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--border-grid);
   vertical-align: middle;
 }
 
-.record-row {
-  transition: background 0.15s;
-}
 .record-row:hover {
   background: var(--bg-card-hover);
-}
-
-.record-row.row-status-alarm {
-  border-left: 4px solid var(--status-alarm);
-}
-.record-row.row-status-warning {
-  border-left: 4px solid var(--status-warn);
-}
-.record-row.row-status-normal {
-  border-left: 4px solid var(--status-normal);
+  outline: 1px solid var(--border-focus);
 }
 
 .col-time {
   white-space: nowrap;
+  font-family: var(--font-mono);
 }
 .time-primary {
-  font-family: var(--font-mono);
-  font-weight: 800;
-  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--text-main);
 }
 .date-secondary {
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  font-size: 0.72rem;
+  color: var(--text-dim);
 }
 .shift-badge {
   display: inline-block;
-  font-size: 0.7rem;
-  font-weight: 600;
-  background: var(--chip-bg);
-  border: 1px solid var(--chip-border);
-  padding: 2px 7px;
-  border-radius: 4px;
-  margin-top: 3px;
+  font-size: 0.68rem;
+  background: var(--bg-window);
+  border: 1px solid var(--border-grid);
+  padding: 1px 5px;
+  border-radius: 2px;
   color: var(--text-muted);
 }
 
 .point-tag {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  font-size: 0.95rem;
-}
-.point-icon {
-  font-size: 1.2rem;
+  gap: 0.35rem;
+  font-weight: 600;
 }
 .equipment-sub {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: var(--text-muted);
+  margin-top: 1px;
 }
 
 .params-grid-cell {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  gap: 0.35rem;
 }
 
-/* Светящиеся неоновые чипы параметров */
 .param-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 4px 9px;
-  border-radius: var(--radius-sm);
-  font-size: 0.8rem;
-  font-weight: 600;
-  transition: all 0.2s;
+  gap: 0.3rem;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 0.76rem;
+  font-family: var(--font-mono);
+  border: 1px solid var(--border-grid);
+  background: var(--bg-window);
 }
-
-[data-theme="dark"] .param-chip.val-ok {
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(52, 211, 153, 0.35);
-  color: #34d399;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.15);
-}
-[data-theme="dark"] .param-chip.val-warn {
-  background: rgba(245, 158, 11, 0.14);
-  border: 1px solid rgba(251, 191, 36, 0.4);
-  color: #fbbf24;
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
-}
-[data-theme="dark"] .param-chip.val-alarm {
-  background: rgba(239, 68, 68, 0.16);
-  border: 1px solid rgba(248, 113, 113, 0.5);
-  color: #f87171;
-  box-shadow: 0 0 12px rgba(239, 68, 68, 0.25);
-}
-
-[data-theme="light"] .param-chip.val-ok {
+.param-chip.val-ok {
   background: var(--status-normal-bg);
-  border: 1px solid var(--status-normal);
+  border-color: var(--status-normal);
   color: var(--status-normal);
 }
-[data-theme="light"] .param-chip.val-warn {
+.param-chip.val-warn {
   background: var(--status-warn-bg);
-  border: 1px solid var(--status-warn);
+  border-color: var(--status-warn);
   color: var(--status-warn);
+  font-weight: 700;
 }
-[data-theme="light"] .param-chip.val-alarm {
+.param-chip.val-alarm {
   background: var(--status-alarm-bg);
-  border: 1px solid var(--status-alarm);
+  border-color: var(--status-alarm);
   color: var(--status-alarm);
+  font-weight: 700;
 }
-
 .param-lbl {
   color: var(--text-muted);
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 0.7rem;
+  font-family: var(--font-fluent);
 }
 
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 4px 11px;
-  font-size: 0.75rem;
-  font-weight: 800;
-  border-radius: 20px;
-  letter-spacing: 0.4px;
+  gap: 0.25rem;
+  padding: 3px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: 3px;
   white-space: nowrap;
 }
-[data-theme="dark"] .badge-normal {
-  background: var(--status-normal-bg);
-  color: #34d399;
-  border: 1px solid #10b981;
-  box-shadow: 0 0 10px var(--status-normal-glow);
-}
-[data-theme="dark"] .badge-warning {
-  background: var(--status-warn-bg);
-  color: #fbbf24;
-  border: 1px solid #f59e0b;
-  box-shadow: 0 0 10px var(--status-warn-glow);
-}
-[data-theme="dark"] .badge-alarm {
-  background: var(--status-alarm-bg);
-  color: #f87171;
-  border: 1px solid #ef4444;
-  box-shadow: 0 0 12px var(--status-alarm-glow);
-}
-
-[data-theme="light"] .badge-normal {
+.badge-normal {
   background: var(--status-normal-bg);
   color: var(--status-normal);
   border: 1px solid var(--status-normal);
 }
-[data-theme="light"] .badge-warning {
+.badge-warning {
   background: var(--status-warn-bg);
   color: var(--status-warn);
   border: 1px solid var(--status-warn);
 }
-[data-theme="light"] .badge-alarm {
+.badge-alarm {
   background: var(--status-alarm-bg);
   color: var(--status-alarm);
   border: 1px solid var(--status-alarm);
 }
 
 .issues-list {
-  margin-top: 0.4rem;
-  font-size: 0.76rem;
+  margin-top: 3px;
+  font-size: 0.72rem;
 }
 .issue-item {
   color: var(--status-alarm);
-  margin-top: 2px;
-  font-weight: 600;
+  margin-top: 1px;
 }
 .issue-item.issue-warning {
   color: var(--status-warn);
 }
 
 .notes-cell {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   color: var(--text-main);
-  max-width: 280px;
-  word-break: break-word;
+  max-width: 260px;
 }
 .tech-signature {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-dim);
-  margin-top: 4px;
-}
-.tech-signature span {
-  color: var(--text-muted);
+  margin-top: 2px;
 }
 
 /* ==========================================================================
-   Calculators Layout
+   EXCEL SHEET TABS (Вкладки листов внизу экрана таблицы)
+   ========================================================================== */
+.excel-sheet-tabs-bar {
+  background: var(--sheet-bar-bg);
+  border-top: 1px solid var(--border-grid);
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  height: 32px;
+  font-size: 0.78rem;
+  user-select: none;
+}
+
+.sheet-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: none;
+  color: var(--text-muted);
+  padding: 4px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  border-radius: 3px 3px 0 0;
+  transition: all 0.15s;
+}
+.sheet-tab.active {
+  background: var(--sheet-tab-active);
+  border-color: var(--border-grid);
+  color: var(--ms-excel-green);
+  border-top: 2px solid var(--ms-excel-green);
+}
+[data-theme="dark"] .sheet-tab.active {
+  color: var(--ms-excel-lightgreen);
+  border-top-color: var(--ms-excel-lightgreen);
+}
+.sheet-tab:hover:not(.active) {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.sheet-add-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sheet-add-btn:hover {
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   Calculators Layout (Fluent Cards)
    ========================================================================== */
 .calc-subtabs {
   display: flex;
-  gap: 0.5rem;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.75rem;
-  margin-bottom: 1.5rem;
-  overflow-x: auto;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--border-grid);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
+  background: var(--bg-card);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-fluent);
+  box-shadow: var(--shadow-card);
 }
 
 .calc-subtab {
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-color);
+  background: transparent;
+  border: 1px solid transparent;
   color: var(--text-muted);
-  padding: 0.65rem 1.3rem;
-  border-radius: var(--radius-sm);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-fluent);
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 700;
-  white-space: nowrap;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  min-height: 40px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.15s;
 }
 .calc-subtab:hover {
-  border-color: #38bdf8;
-  color: var(--text-main);
+  background: var(--bg-window);
 }
 .calc-subtab.active {
-  background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
-  border-color: transparent;
+  background: var(--ms-excel-green);
   color: white;
-  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
 }
 
 .calc-pane {
@@ -814,64 +717,68 @@ body {
 .calc-pane.active {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
-
 @media (max-width: 900px) {
-  .calc-pane.active {
-    grid-template-columns: 1fr;
-  }
+  .calc-pane.active { grid-template-columns: 1fr; }
 }
 
 .calc-card {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  box-shadow: var(--card-shadow);
-  transition: all 0.25s ease;
-}
-
-.calc-card:hover {
-  border-color: var(--border-glow);
-  box-shadow: var(--card-shadow-hover);
+  border: 1px solid var(--border-grid);
+  border-radius: var(--radius-fluent);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-card);
 }
 
 .calc-card h3 {
-  font-size: 1.15rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
   color: var(--text-main);
+  margin-bottom: 0.4rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-weight: 800;
+  gap: 0.4rem;
+  font-weight: 700;
 }
-
 .calc-card p.calc-desc {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
-  margin-bottom: 1.25rem;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-grid);
+  padding-bottom: 0.5rem;
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }
 .form-group label {
   display: block;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.25rem;
   font-weight: 600;
+}
+
+.form-control {
+  background: var(--bg-input);
+  border: 1px solid var(--border-grid);
+  color: var(--text-main);
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-fluent);
+  font-size: 0.85rem;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.form-control:focus {
+  border-color: var(--border-focus);
+  box-shadow: inset 0 0 0 1px var(--border-focus);
 }
 
 .input-with-addon {
@@ -881,182 +788,154 @@ body {
 }
 .input-with-addon .addon-unit {
   position: absolute;
-  right: 0.85rem;
-  font-size: 0.78rem;
+  right: 0.75rem;
+  font-size: 0.74rem;
   color: var(--text-dim);
   pointer-events: none;
   font-weight: 600;
 }
 
 .calc-results-panel {
-  background: var(--bg-input);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 1.25rem;
-  margin-top: 1rem;
+  background: var(--bg-window);
+  border: 1px solid var(--border-grid);
+  border-radius: var(--radius-fluent);
+  padding: 1rem;
+  margin-top: 0.85rem;
 }
 
 .res-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.65rem 0;
-  border-bottom: 1px solid var(--border-color);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-grid);
 }
 .res-row:last-child {
   border-bottom: none;
 }
 .res-label {
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   color: var(--text-muted);
-  font-weight: 500;
 }
 .res-value {
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-size: 1.15rem;
+  font-weight: 700;
   font-family: var(--font-mono);
-  color: #38bdf8;
-  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.25));
+  color: var(--ms-excel-green);
+}
+[data-theme="dark"] .res-value {
+  color: var(--ms-excel-lightgreen);
 }
 
 .formula-box {
-  background: var(--bg-input);
-  border-left: 3px solid #0ea5e9;
-  padding: 0.85rem 1.1rem;
-  border-radius: 4px;
+  background: var(--bg-window);
+  border-left: 3px solid var(--ms-excel-green);
+  padding: 0.65rem 0.85rem;
+  border-radius: 2px;
   font-family: var(--font-mono);
-  font-size: 0.82rem;
-  color: #38bdf8;
-  margin-bottom: 1.1rem;
+  font-size: 0.8rem;
+  color: var(--text-main);
+  margin-bottom: 0.85rem;
 }
 
 /* ==========================================================================
-   Reminders Cards
+   Reminders & Timers Layout
    ========================================================================== */
 .reminders-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
 }
 
 .reminder-card {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.35rem;
+  border: 1px solid var(--border-grid);
+  border-radius: var(--radius-fluent);
+  padding: 1.1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: var(--card-shadow);
-  transition: all 0.25s ease;
+  box-shadow: var(--shadow-card);
   position: relative;
+  transition: box-shadow 0.15s;
 }
 .reminder-card:hover {
-  border-color: var(--border-glow);
-  box-shadow: var(--card-shadow-hover);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-fluent);
 }
-
 .reminder-card.rem-overdue {
-  border-color: var(--status-alarm);
+  border-left: 4px solid var(--status-alarm);
   background: var(--status-alarm-bg);
-  box-shadow: 0 0 20px var(--status-alarm-glow);
 }
 .reminder-card.rem-soon {
-  border-color: var(--status-warn);
-  box-shadow: 0 0 16px var(--status-warn-glow);
-}
-.reminder-card.rem-disabled {
-  opacity: 0.55;
+  border-left: 4px solid var(--status-warn);
 }
 
 .rem-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   gap: 0.5rem;
 }
-
 .rem-title-group {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 .rem-icon {
-  font-size: 1.8rem;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+  font-size: 1.5rem;
 }
 .rem-title {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--text-main);
 }
 .rem-subtitle {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: var(--text-muted);
-  margin-top: 2px;
 }
-
 .rem-time-badge {
-  background: var(--bg-input);
-  border: 1px solid var(--border-color);
-  padding: 5px 11px;
-  border-radius: 20px;
+  background: var(--bg-window);
+  border: 1px solid var(--border-grid);
+  padding: 3px 8px;
+  border-radius: 2px;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: #38bdf8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ms-excel-green);
   white-space: nowrap;
 }
-.rem-time-badge.badge-due {
-  background: linear-gradient(135deg, #ef4444, #f43f5e);
-  color: white;
-  border: none;
-  box-shadow: 0 0 14px rgba(239, 68, 68, 0.5);
-  animation: pulse 1.5s infinite;
+[data-theme="dark"] .rem-time-badge {
+  color: var(--ms-excel-lightgreen);
 }
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+.rem-time-badge.badge-due {
+  background: var(--status-alarm);
+  color: white;
+  border-color: var(--status-alarm);
 }
 
 .rem-notes {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
-  background: var(--bg-input);
-  padding: 0.55rem 0.85rem;
-  border-radius: var(--radius-sm);
-  margin-bottom: 1rem;
+  background: var(--bg-window);
+  padding: 0.4rem 0.65rem;
+  border-radius: 2px;
+  margin-bottom: 0.85rem;
+  border-left: 2px solid var(--border-dark);
 }
 
 .rem-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.badge-pulse {
-  background: linear-gradient(135deg, #ef4444, #f43f5e);
-  color: white;
-  border-radius: 12px;
-  padding: 2px 7px;
-  font-size: 0.72rem;
-  font-weight: 800;
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
-  animation: pulse 1.2s infinite;
+  gap: 0.35rem;
 }
 
 /* ==========================================================================
-   Charts Grid
+   Charts Grid (Excel Chart Cards)
    ========================================================================== */
 .charts-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 @media (max-width: 1000px) {
   .charts-grid { grid-template-columns: 1fr; }
@@ -1064,43 +943,30 @@ body {
 
 .chart-card {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.35rem;
-  display: flex;
-  flex-direction: column;
-  box-shadow: var(--card-shadow);
-  transition: all 0.25s ease;
+  border: 1px solid var(--border-grid);
+  border-radius: var(--radius-fluent);
+  padding: 1.1rem;
+  box-shadow: var(--shadow-card);
 }
-
-.chart-card:hover {
-  border-color: var(--border-glow);
-  box-shadow: var(--card-shadow-hover);
-}
-
 .chart-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }
-
 .chart-title {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--text-main);
 }
-
 .chart-container-box {
   position: relative;
-  height: 280px;
+  height: 270px;
   width: 100%;
 }
 
 /* ==========================================================================
-   Modal Windows
+   Modal Windows (Fluent Dialogs)
    ========================================================================== */
 .modal-overlay {
   display: none;
@@ -1110,74 +976,126 @@ body {
   right: 0;
   bottom: 0;
   background: var(--modal-overlay);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   z-index: 1000;
   align-items: center;
   justify-content: center;
   padding: 1rem;
 }
-
 .modal-overlay.active {
   display: flex;
 }
 
 .modal-content {
-  background: var(--bg-card-solid);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  max-width: 680px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-fluent);
+  max-width: 650px;
   width: 100%;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-  animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes modalPop {
-  from { opacity: 0; transform: scale(0.94); }
-  to { opacity: 1; transform: scale(1); }
+  box-shadow: var(--shadow-fluent);
 }
 
 .modal-header {
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid var(--border-color);
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--border-grid);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--bg-window);
+}
+.modal-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 1.25rem;
   overflow-y: auto;
   flex: 1;
 }
 
 .modal-footer {
-  padding: 1rem 1.5rem;
-  border-top: 1px solid var(--border-color);
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--border-grid);
   display: flex;
   justify-content: flex-end;
-  gap: 0.75rem;
+  gap: 0.5rem;
+  background: var(--bg-window);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: var(--radius-fluent);
+  border: 1px solid var(--border-grid);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--ms-excel-green);
+  color: white;
+  border-color: var(--ms-excel-green);
+}
+.btn-primary:hover {
+  background: var(--ms-excel-darkgreen);
+  border-color: var(--ms-excel-darkgreen);
+}
+.btn-outline {
+  background: var(--bg-card);
+  border-color: var(--border-grid);
+  color: var(--text-main);
+}
+.btn-outline:hover {
+  background: var(--bg-window);
+  border-color: var(--border-dark);
+}
+.btn-danger-outline {
+  background: transparent;
+  border-color: var(--status-alarm);
+  color: var(--status-alarm);
+}
+.btn-danger-outline:hover {
+  background: var(--status-alarm-bg);
+}
+.btn-sm {
+  padding: 0.3rem 0.65rem;
+  font-size: 0.78rem;
+}
+.btn-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  font-size: 0.95rem;
+  border-radius: 2px;
+}
+.btn-icon:hover {
+  background: rgba(0, 0, 0, 0.08);
 }
 
 .param-header-flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
 }
-
 .norm-tip {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--text-dim);
 }
-
 .param-feedback {
-  font-size: 0.74rem;
-  margin-top: 3px;
-  min-height: 16px;
+  font-size: 0.72rem;
+  margin-top: 2px;
+  min-height: 14px;
 }
 
 .text-danger { color: var(--status-alarm); }
@@ -1186,17 +1104,17 @@ body {
 .text-muted { color: var(--text-muted); }
 .text-center { text-align: center; }
 .text-right { text-align: right; }
-.py-5 { padding-top: 3rem; padding-bottom: 3rem; }
+.py-5 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
 
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 .empty-icon {
-  font-size: 3rem;
-  opacity: 0.5;
+  font-size: 2.5rem;
+  opacity: 0.4;
 }
 
 #printableReportArea {
@@ -1204,7 +1122,7 @@ body {
 }
 
 /* ==========================================================================
-   MOBILE BOTTOM NAVIGATION BAR
+   MOBILE BOTTOM BAR (Office 365 Mobile)
    ========================================================================== */
 .bottom-nav {
   display: none;
@@ -1212,13 +1130,11 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 62px;
-  background: var(--header-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid var(--border-color);
+  height: 56px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-grid);
   z-index: 999;
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
@@ -1232,132 +1148,80 @@ body {
   border: none;
   color: var(--text-muted);
   cursor: pointer;
-  padding: 6px 0;
-  font-size: 0.72rem;
-  font-weight: 700;
-  transition: all 0.15s;
+  padding: 4px 0;
+  font-size: 0.7rem;
+  font-weight: 600;
   position: relative;
 }
-
 .bottom-nav-item .bnav-icon {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   margin-bottom: 2px;
-  transition: transform 0.15s;
 }
-
 .bottom-nav-item.active {
-  color: #38bdf8;
+  color: var(--ms-excel-green);
 }
-.bottom-nav-item.active .bnav-icon {
-  transform: scale(1.15);
-  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+[data-theme="dark"] .bottom-nav-item.active {
+  color: var(--ms-excel-lightgreen);
 }
 
 .bottom-nav-badge {
   position: absolute;
   top: 4px;
   right: 25%;
-  background: linear-gradient(135deg, #ef4444, #f43f5e);
+  background: var(--status-alarm);
   color: white;
   border-radius: 10px;
   padding: 1px 5px;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 800;
-  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
 }
 
 /* ==========================================================================
-   RESPONSIVE MEDIA QUERIES (Смартфоны и планшеты)
+   MOBILE RESPONSIVENESS
    ========================================================================== */
 @media (max-width: 768px) {
   .bottom-nav {
     display: flex;
   }
-
-  .app-header .nav-tabs {
+  .office-ribbon {
     display: none;
   }
-
+  .titlebar-search {
+    display: none;
+  }
   .main-content {
-    padding: 1rem 0.75rem;
-    padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px));
+    padding: 0.75rem 0.5rem;
+    padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
   }
-
-  .app-header {
-    padding: 0.65rem 0.85rem;
+  .office-titlebar {
+    padding: 0 0.75rem;
   }
-
-  .brand-logo {
-    width: 38px;
-    height: 38px;
-    font-size: 1.5rem;
+  .titlebar-doc-name {
+    font-size: 0.8rem;
   }
-
-  .brand-title h1 {
-    font-size: 0.95rem;
-  }
-
-  .brand-facility {
-    font-size: 0.72rem;
-  }
-
-  .header-actions .btn {
-    padding: 0.35rem 0.55rem;
-    font-size: 0.78rem;
-  }
-
-  .header-actions .btn-export-text {
+  .autosave-pill {
     display: none;
   }
 
   .kpi-row {
     grid-template-columns: 1fr 1fr;
-    gap: 0.65rem;
-    margin-bottom: 1rem;
+    gap: 0.5rem;
   }
-
   .kpi-card {
-    padding: 0.85rem;
+    padding: 0.65rem 0.75rem;
   }
-
-  .kpi-title {
-    font-size: 0.68rem;
-  }
-
   .kpi-value {
-    font-size: 1.45rem;
+    font-size: 1.35rem;
   }
 
-  .kpi-icon {
-    font-size: 1.6rem;
-  }
-
-  .toolbar-card {
-    padding: 0.85rem;
-  }
-  .filter-group {
-    width: 100%;
-  }
-  .filter-item {
-    width: 100%;
-  }
-  .filter-item select,
-  .filter-item input {
-    width: 100%;
-    min-width: 0;
-  }
-
-  /* Трансформация таблицы в карточки */
+  /* Responsive Excel Cards */
   .table-responsive {
     border: none;
     background: transparent;
-    box-shadow: none;
   }
-
   .data-table thead {
     display: none;
   }
-
   .data-table,
   .data-table tbody,
   .data-table tr,
@@ -1365,89 +1229,32 @@ body {
     display: block;
     width: 100%;
   }
-
   .data-table td {
-    padding: 0.4rem 0;
-    border-bottom: none;
+    padding: 0.35rem 0;
+    border: none;
   }
-
   .record-row {
     background: var(--bg-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 1rem;
-    margin-bottom: 0.85rem;
-    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-grid);
+    border-radius: var(--radius-fluent);
+    padding: 0.85rem;
+    margin-bottom: 0.75rem;
+    box-shadow: var(--shadow-card);
   }
-
-  .record-row.row-status-alarm {
-    border-left: 5px solid var(--status-alarm);
-  }
-  .record-row.row-status-warning {
-    border-left: 5px solid var(--status-warn);
-  }
-  .record-row.row-status-normal {
-    border-left: 5px solid var(--status-normal);
-  }
-
   .col-time {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color) !important;
-    padding-bottom: 0.5rem !important;
-    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-grid) !important;
+    padding-bottom: 0.4rem !important;
+    margin-bottom: 0.4rem;
   }
-
-  .col-point {
-    margin-bottom: 0.5rem;
-  }
-
-  .col-params {
-    margin-bottom: 0.5rem;
-  }
-
-  .col-status {
-    margin-bottom: 0.5rem;
-  }
-
   .col-actions {
-    border-top: 1px solid var(--border-color) !important;
-    padding-top: 0.6rem !important;
-    margin-top: 0.6rem;
+    border-top: 1px solid var(--border-grid) !important;
+    padding-top: 0.5rem !important;
+    margin-top: 0.5rem;
     text-align: right;
   }
-
-  .row-actions-group {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.5rem;
-  }
-
   .form-grid {
     grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-
-  .modal-content {
-    max-height: 95vh;
-    border-radius: var(--radius-md);
-  }
-
-  .modal-header {
-    padding: 1rem;
-  }
-  .modal-body {
-    padding: 1rem;
-  }
-  .modal-footer {
-    padding: 0.75rem 1rem;
-  }
-
-  .calc-subtab {
-    padding: 0.5rem 0.85rem;
-    font-size: 0.82rem;
   }
 }
