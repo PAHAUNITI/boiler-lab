@@ -1,6 +1,6 @@
 // Service Worker for Boiler Water Lab PWA
 // Strategy: Network-First with Offline Cache Fallback
-const CACHE_NAME = 'boiler-lab-v5';
+const CACHE_NAME = 'boiler-lab-v6';
 const ASSETS = [
   './',
   './index.html',
