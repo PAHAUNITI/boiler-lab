@@ -204,7 +204,7 @@ body {
   align-items: center;
   gap: 0.45rem;
   padding: 0.45rem 0.9rem;
-  border: none;
+  border: 1px solid transparent;
   background: transparent;
   color: rgba(255, 255, 255, 0.88);
   font-size: 0.88rem;
@@ -220,15 +220,19 @@ body {
   background-color: rgba(255, 255, 255, 0.16);
 }
 
+/* Светлая тема: активный таб белый */
 .nav-tab-btn.active {
   background-color: #ffffff;
   color: #0078d4;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
+/* ТЁМНАЯ ТЕМА: активный таб СЕРЫЙ, а не белый! */
 [data-theme="dark"] .nav-tab-btn.active {
-  background-color: #ffffff;
-  color: #005a9e;
+  background-color: #252423;
+  color: #f3f2f1;
+  border-color: #484644;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
 }
 
 .nav-badge {
@@ -270,6 +274,20 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
+/* ТЁМНАЯ ТЕМА: кнопка в шапке СЕРАЯ, а не белая! */
+[data-theme="dark"] .header-actions .btn-primary {
+  background-color: #252423;
+  color: #f3f2f1;
+  border: 1px solid #484644;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .header-actions .btn-primary:hover {
+  background-color: #2f2e2d;
+  color: #38bdf8;
+  border-color: #38bdf8;
+}
+
 .header-actions .btn-outline {
   background-color: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.35);
@@ -282,6 +300,18 @@ body {
   color: #ffffff;
 }
 
+[data-theme="dark"] .header-actions .btn-outline {
+  background-color: rgba(37, 36, 35, 0.8);
+  border-color: #484644;
+  color: #f3f2f1;
+}
+
+[data-theme="dark"] .header-actions .btn-outline:hover {
+  background-color: #2f2e2d;
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
 .header-actions .btn-icon {
   background-color: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.35);
@@ -292,6 +322,18 @@ body {
   background-color: rgba(255, 255, 255, 0.25);
   border-color: rgba(255, 255, 255, 0.6);
   color: #ffffff;
+}
+
+[data-theme="dark"] .header-actions .btn-icon {
+  background-color: rgba(37, 36, 35, 0.8);
+  border-color: #484644;
+  color: #f3f2f1;
+}
+
+[data-theme="dark"] .header-actions .btn-icon:hover {
+  background-color: #2f2e2d;
+  border-color: #38bdf8;
+  color: #38bdf8;
 }
 
 /* --------------------------------------------------------------------
