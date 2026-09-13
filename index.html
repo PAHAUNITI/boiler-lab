@@ -665,6 +665,33 @@
     </div>
   </div>
 
+  <!-- ====================================================================
+       МОБИЛЬНАЯ НАВИГАЦИОННАЯ ПАНЕЛЬ (Mobile Bottom Navigation)
+       ==================================================================== -->
+  <nav class="bottom-nav">
+    <button class="bottom-nav-item active" data-tab="journal" onclick="App.switchTab('journal')">
+      <span class="bnav-icon">📋</span>
+      <span>Журнал</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="calculators" onclick="App.switchTab('calculators')">
+      <span class="bnav-icon">🧮</span>
+      <span>Расчеты</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="reminders" onclick="App.switchTab('reminders')">
+      <span class="bnav-icon">⏰</span>
+      <span>Регламент</span>
+      <span id="bottomNavReminderBadge" class="bottom-nav-badge" style="display: none;">0</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="analytics" onclick="App.switchTab('analytics')">
+      <span class="bnav-icon">📈</span>
+      <span>Графики</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="settings" onclick="App.switchTab('settings')">
+      <span class="bnav-icon">⚙️</span>
+      <span>Опции</span>
+    </button>
+  </nav>
+
   <div id="printableReportArea"></div>
 
   <script src="js/xlsx.full.min.js"></script>

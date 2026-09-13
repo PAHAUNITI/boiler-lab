@@ -54,7 +54,7 @@ const App = {
     });
 
     // Обновляем мобильные табы
-    document.querySelectorAll('.m-nav-item').forEach(btn => {
+    document.querySelectorAll('.bottom-nav-item, .m-nav-item').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.tab === tabId);
     });
 
