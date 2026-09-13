@@ -1,0 +1,150 @@
+/* ==========================================================================
+   Print Styles for Official Water-Chemical Regime Logbook (Суточная ведомость ВХР)
+   Оптимизировано для печати на формате А4 (альбомная ориентация)
+   ========================================================================== */
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 10mm 8mm 10mm 8mm;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Times New Roman', Times, serif, sans-serif !important;
+    font-size: 9pt !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Скрываем все элементы интерфейса программы */
+  .app-header,
+  .nav-tabs,
+  .toolbar-card,
+  .kpi-row,
+  .main-content,
+  .modal-overlay,
+  .calc-subtabs,
+  .btn,
+  button {
+    display: none !important;
+  }
+
+  /* Показываем только печатную область */
+  #printableReportArea {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .official-print-document {
+    width: 100%;
+  }
+
+  .print-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+
+  .print-org h3 {
+    font-size: 13pt;
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .print-org p {
+    font-size: 9pt;
+    margin: 2px 0 0 0;
+    font-style: italic;
+  }
+
+  .print-doc-title h2 {
+    font-size: 14pt;
+    margin: 0 0 4px 0;
+    text-align: right;
+    letter-spacing: 0.5px;
+  }
+
+  .print-meta-grid {
+    display: flex;
+    gap: 15px;
+    font-size: 8.5pt;
+    justify-content: flex-end;
+  }
+
+  /* Таблица результатов замеров */
+  .print-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    margin-bottom: 15px;
+  }
+
+  .print-table th,
+  .print-table td {
+    border: 1px solid #000000 !important;
+    padding: 3px 5px !important;
+    text-align: center;
+    font-size: 8.5pt;
+  }
+
+  .print-table th {
+    background-color: #f0f0f0 !important;
+    font-weight: bold;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-table td:nth-child(4),
+  .print-table td:nth-child(12) {
+    text-align: left !important;
+  }
+
+  .print-status-alarm {
+    font-weight: bold;
+    color: #b91c1c !important;
+    background-color: #fee2e2 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .print-status-warning {
+    font-weight: bold;
+    background-color: #fef3c7 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .print-status-normal {
+    color: #047857 !important;
+  }
+
+  /* Блок подписей внизу */
+  .print-footer-signatures {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    page-break-inside: avoid;
+  }
+
+  .sig-block {
+    width: 31%;
+  }
+
+  .sig-title {
+    display: block;
+    font-size: 8.5pt;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .sig-line {
+    font-size: 8.5pt;
+    border-bottom: 1px solid #000;
+    padding-bottom: 2px;
+  }
+}

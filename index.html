@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Лаборатория ВХР котельной | Журнал, Калькуляторы и Регламент</title>
+  
+  <!-- Мобильная интеграция (PWA / iOS / Android) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ВХР Лаб">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0b1120">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/print.css" media="print">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22><text y=%2220%22 font-size=%2222%22>🧪</text></svg>">
+</head>
+<body>
+
+  <!-- Шапка приложения и навигация SCADA -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="brand-logo">🧪</div>
+      <div class="brand-title">
+        <h1>ЛАБОРАТОРИЯ ВХР</h1>
+        <div class="brand-facility" id="brandFacilityName">Районная отопительная котельная №4</div>
+      </div>
+    </div>
+
+    <!-- Десктопные вкладки (скрываются на смартфонах) -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="journal" onclick="App.switchTab('journal')">
+        📋 Журнал анализов
+      </button>
+      <button class="nav-tab" data-tab="calculators" onclick="App.switchTab('calculators')">
+        🧮 Калькулятор ВХР
+      </button>
+      <button class="nav-tab" data-tab="reminders" onclick="App.switchTab('reminders')">
+        ⏰ Напоминалки
+        <span id="reminderDueBadge" class="badge-pulse" style="display: none;">0</span>
+      </button>
+      <button class="nav-tab" data-tab="analytics" onclick="App.switchTab('analytics')">
+        📈 Графики и тренды
+      </button>
+      <button class="nav-tab" data-tab="settings" onclick="App.switchTab('settings')">
+        ⚙️ Настройки и нормы
+      </button>
+    </nav>
+
+    <!-- Кнопки действий и переключатель темы -->
+    <div class="header-actions">
+      <!-- Переключатель День / Ночь -->
+      <button class="btn-theme-toggle" onclick="App.toggleTheme()" title="Сменить тему оформления">
+        ☀️ <span class="theme-label">День</span>
+      </button>
+
+      <button class="btn btn-primary btn-sm" onclick="Journal.openNewRecordModal()" title="Добавить новый замер">
+        ➕ <span class="btn-export-text">Новый замер</span>
+      </button>
+
+      <button class="btn btn-outline btn-sm" onclick="ExportManager.exportToExcel()" title="Выгрузить в Excel (.xlsx)">
+        📊 <span class="btn-export-text">Excel</span>
+      </button>
+
+      <button class="btn btn-outline btn-sm" onclick="ExportManager.printDailyReport()" title="Сформировать суточную ведомость в PDF / Печать">
+        🖨️ <span class="btn-export-text">Печать</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Основное рабочее пространство -->
+  <main class="main-content">
+
+    <!-- ====================================================================
+         ВКЛАДКА 1: ЖУРНАЛ АНАЛИЗОВ ВХР
+         ==================================================================== -->
+    <section id="tab-journal" class="tab-pane active">
+      <!-- Сводные KPI смены -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-title">Всего замеров</div>
+            <div class="kpi-value" id="statTotalRecords">0</div>
+          </div>
+          <div class="kpi-icon">📋</div>
+        </div>
+        <div class="kpi-card kpi-normal">
+          <div>
+            <div class="kpi-title">В норме</div>
+            <div class="kpi-value" id="statNormalRecords">0</div>
+          </div>
+          <div class="kpi-icon">✅</div>
+        </div>
+        <div class="kpi-card kpi-warn">
+          <div>
+            <div class="kpi-title">Предупреждения</div>
+            <div class="kpi-value" id="statWarnRecords">0</div>
+          </div>
+          <div class="kpi-icon">⚠️</div>
+        </div>
+        <div class="kpi-card kpi-alarm">
+          <div>
+            <div class="kpi-title">Нарушения норм</div>
+            <div class="kpi-value" id="statAlarmRecords">0</div>
+          </div>
+          <div class="kpi-icon">🚨</div>
+        </div>
+      </div>
+
+      <!-- Панель фильтров и поиска -->
+      <div class="toolbar-card">
+        <div class="filter-group">
+          <div class="filter-item">
+            <select id="filterPoint" class="form-control">
+              <option value="all">Все точки контроля</option>
+              <option value="feed">⚡ Питательная вода</option>
+              <option value="boiler">🔥 Котловая вода</option>
+              <option value="soft">🧪 Вода ХВО (умягченная)</option>
+              <option value="raw">💧 Исходная (сырая) вода</option>
+              <option value="network">🔄 Сетевая вода</option>
+              <option value="condensate">🌫️ Конденсат</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <select id="filterStatus" class="form-control">
+              <option value="all">Любой статус</option>
+              <option value="normal">Только в норме</option>
+              <option value="warning">Предупреждения</option>
+              <option value="alarm">🚨 Нарушения норм</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <select id="filterShift" class="form-control" style="min-width: 110px;">
+              <option value="all">Все смены</option>
+              <option value="1">Смена 1 (день)</option>
+              <option value="2">Смена 2 (ночь)</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <input type="text" id="filterSearch" class="form-control" placeholder="🔍 Поиск по узлу, лаборанту...">
+          </div>
+
+          <button class="btn btn-outline btn-sm" onclick="Journal.resetFilters()">
+            Сброс
+          </button>
+        </div>
+
+        <button class="btn btn-primary btn-sm" onclick="Journal.openNewRecordModal()">
+          ➕ Внести замер
+        </button>
+      </div>
+
+      <!-- Таблица / Карточки журнала -->
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 110px;">Время / Смена</th>
+              <th style="width: 210px;">Точка отбора / Узел</th>
+              <th>Результаты лабораторного анализа</th>
+              <th style="width: 190px;">Оценка ВХР</th>
+              <th style="width: 250px;">Замечания / Лаборант</th>
+              <th style="width: 80px;" class="text-right">Действия</th>
+            </tr>
+          </thead>
+          <tbody id="journalTableBody">
+            <!-- Заполняется в journal.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         ВКЛАДКА 2: ИНЖЕНЕРНЫЙ КАЛЬКУЛЯТОР ВХР
+         ==================================================================== -->
+    <section id="tab-calculators" class="tab-pane">
+      <div class="calc-subtabs">
+        <button class="calc-subtab active" data-subtab="blowdown" onclick="App.switchCalcSubtab('blowdown')">
+          💨 Продувка котла
+        </button>
+        <button class="calc-subtab" data-subtab="filter" onclick="App.switchCalcSubtab('filter')">
+          🧪 Фильтроцикл ХВО
+        </button>
+        <button class="calc-subtab" data-subtab="reagents" onclick="App.switchCalcSubtab('reagents')">
+          ⚖️ Реагенты
+        </button>
+        <button class="calc-subtab" data-subtab="converter" onclick="App.switchCalcSubtab('converter')">
+          🔄 Конвертер жесткости
+        </button>
+      </div>
+
+      <!-- 1. Продувка -->
+      <div id="calc-blowdown" class="calc-pane active">
+        <div class="calc-card">
+          <h3>💨 Непрерывная продувка котла</h3>
+          <p class="calc-desc">Расчет процента продувки для предотвращения накипеобразования и перерасхода топлива по ПТЭ ТЭ.</p>
+          
+          <div class="formula-box">
+            P = (S_пит / (S_котл - S_пит)) × 100%<br>
+            G_прод = D × (P / 100) [т/ч]
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="calcBlowFeedTds">Солесодержание питательной воды (Sпит):</label>
+              <div class="input-with-addon">
+                <input type="number" inputmode="decimal" id="calcBlowFeedTds" class="form-control" value="45" step="1">
+                <span class="addon-unit">мг/л</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="calcBlowBoilerTds">Предельное солесодержание котловой (Sкотл):</label>
+              <div class="input-with-addon">
+                <input type="number" inputmode="decimal" id="calcBlowBoilerTds" class="form-control" value="2000" step="50">
+                <span class="addon-unit">мг/л</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="calcBlowCapacity">Паропроизводительность котла (D):</label>
+            <div class="input-with-addon">
+              <input type="number" inputmode="decimal" id="calcBlowCapacity" class="form-control" value="10" step="0.5">
+              <span class="addon-unit">т/ч</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-card">
+          <h3>📊 Результаты расчета продувки</h3>
+          <div id="blowdownResults" class="calc-results-panel"></div>
+        </div>
+      </div>
+
+      <!-- 2. Фильтроцикл ХВО -->
+      <div id="calc-filter" class="calc-pane">
+        <div class="calc-card">
+          <h3>🧪 Расчет фильтроцикла Na-катионита</h3>
+          <p class="calc-desc">Определение объема воды до истощения смолы, времени работы и расхода соли на регенерацию.</p>
+          
+          <div class="formula-box">
+            V_ф = (E_раб × V_смолы) / Ж_исх [м³]<br>
+            M_соли = (E_раб × V_смолы × q_соли) / 1000 [кг NaCl]
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="calcResinVol">Объем смолы в фильтре (Vсмолы):</label>
+              <div class="input-with-addon">
+                <input type="number" inputmode="decimal" id="calcResinVol" class="form-control" value="2.5" step="0.1">
+                <span class="addon-unit">м³</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="calcResinCap">Рабочая обменная емкость (Eраб):</label>
+              <div class="input-with-addon">
+                <input type="number" inputmode="decimal" id="calcResinCap" class="form-control" value="650" step="10">
+                <span class="addon-unit">г-экв/м³</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="calcRawHard">Жесткость исходной воды (Жисх):</label>
+              <div class="input-with-addon">
+                <input type="number" inputmode="decimal" id="calcRawHard" class="form-control" value="4.5" step="0.1">
+                <span class="addon-unit">мг-экв/л</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="calcFilterFlow">Расход воды через фильтр (Q):</label>
+              <div class="input-with-addon">
+                <input type="number" inputmode="decimal" id="calcFilterFlow" class="form-control" value="15" step="1">
+                <span class="addon-unit">м³/ч</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="calcSaltRate">Удельный расход соли на регенерацию (qсоли):</label>
+            <div class="input-with-addon">
+              <input type="number" inputmode="decimal" id="calcSaltRate" class="form-control" value="140" step="5">
+              <span class="addon-unit">г/г-экв</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-card">
+          <h3>📊 Результаты расчета фильтра</h3>
+          <div id="filterResults" class="calc-results-panel"></div>
+        </div>
+      </div>
+
+      <!-- 3. Реагенты -->
+      <div id="calc-reagents" class="calc-pane">
+        <div class="calc-card">
+          <h3>1. Связывание кислорода (Сульфит)</h3>
+          <p class="calc-desc">Связывание остаточного O₂ в питательной воде после деаэратора (2 Na₂SO₃ + O₂ → 2 Na₂SO₄).</p>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="calcSulfWaterFlow">Расход питательной воды:</label>
+              <div class="input-with-addon">
+                <input type="number" inputmode="decimal" id="calcSulfWaterFlow" class="form-control" value="20" step="1">
+                <span class="addon-unit">м³/ч</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="calcSulfO2">Остаточный O₂ в воде:</label>
+              <div class="input-with-addon">
+                <input type="number" inputmode="decimal" id="calcSulfO2" class="form-control" value="18" step="1">
+                <span class="addon-unit">мкг/дм³</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="sulfiteResults" class="calc-results-panel"></div>
+        </div>
+
+        <div class="calc-card">
+          <h3>2. Фосфатирование котловой воды</h3>
+          <p class="calc-desc">Дозирование тринатрийфосфата (Na₃PO₄·12H₂O) для осаждения солей кальция в безнакипный шлам.</p>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="calcPhosSteamCap">Паропроизводительность котла:</label>
+              <div class="input-with-addon">
+                <input type="number" inputmode="decimal" id="calcPhosSteamCap" class="form-control" value="10" step="1">
+                <span class="addon-unit">т/ч</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="calcPhosFeedHard">Жесткость питательной воды:</label>
+              <div class="input-with-addon">
+                <input type="number" inputmode="decimal" id="calcPhosFeedHard" class="form-control" value="5" step="0.5">
+                <span class="addon-unit">мкг-экв/дм³</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="phosphateResults" class="calc-results-panel"></div>
+        </div>
+      </div>
+
+      <!-- 4. Конвертер единиц -->
+      <div id="calc-converter" class="calc-pane">
+        <div class="calc-card">
+          <h3>🔄 Конвертер единиц жесткости</h3>
+          <p class="calc-desc">Перевод между российскими стандартами, немецкими градусами и шкалой ppm.</p>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="calcConvHardVal">Значение жесткости:</label>
+              <input type="number" inputmode="decimal" id="calcConvHardVal" class="form-control" value="1.5" step="0.1">
+            </div>
+            <div class="form-group">
+              <label for="calcConvHardUnit">Исходная единица:</label>
+              <select id="calcConvHardUnit" class="form-control">
+                <option value="mgeq_l">мг-экв/л (Россия, СанПиН)</option>
+                <option value="mcgeq_dm3">мкг-экв/дм³ (паровые котлы)</option>
+                <option value="deg_dh">°dH (Немецкие градусы)</option>
+                <option value="ppm">ppm (мг/л CaCO₃)</option>
+                <option value="deg_f">°f (Французские градусы)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-card">
+          <h3>📊 Эквивалентные значения жесткости</h3>
+          <div id="hardnessConverterResults" class="calc-results-panel"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         ВКЛАДКА 3: НАПОМИНАЛКИ И РЕГЛАМЕНТ СМЕНЫ
+         ==================================================================== -->
+    <section id="tab-reminders" class="tab-pane">
+      <div class="toolbar-card">
+        <div>
+          <h3 style="font-size: 1.1rem;">Регламент анализов и обслуживания</h3>
+          <p class="text-muted" style="font-size: 0.84rem;">Контроль периодичности отбора проб, мягкий звук и переход к замеру.</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn btn-outline btn-sm" onclick="Reminders.requestNotificationPermission()">
+            🔔 Push-уведомления
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="App.openNewReminderModal()">
+            ➕ Новая задача
+          </button>
+        </div>
+      </div>
+
+      <div id="remindersList" class="reminders-grid"></div>
+    </section>
+
+
+    <!-- ====================================================================
+         ВКЛАДКА 4: АНАЛИТИКА И ГРАФИКИ ТРЕНДОВ
+         ==================================================================== -->
+    <section id="tab-analytics" class="tab-pane">
+      <div class="toolbar-card">
+        <div>
+          <h3 style="font-size: 1.1rem;">Динамика параметров водно-химического режима</h3>
+          <p class="text-muted" style="font-size: 0.84rem;">Визуализация трендов с адаптацией под выбранную тему (день/ночь).</p>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="Analytics.render()">
+          🔄 Обновить графики
+        </button>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-header">
+            <span class="chart-title">📈 Водородный показатель (pH)</span>
+          </div>
+          <div class="chart-container-box">
+            <canvas id="chartPh"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <span class="chart-title">🚨 Кислород O₂ питательной воды (норма ≤ 20 мкг/дм³)</span>
+          </div>
+          <div class="chart-container-box">
+            <canvas id="chartO2"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <span class="chart-title">🧪 Жесткость фильтратов ХВО (контроль истощения)</span>
+          </div>
+          <div class="chart-container-box">
+            <canvas id="chartHardness"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <span class="chart-title">📊 Качество анализов за смену</span>
+          </div>
+          <div class="chart-container-box">
+            <canvas id="chartQualityPie"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         ВКЛАДКА 5: НАСТРОЙКИ И НОРМАТИВНЫЙ СПРАВОЧНИК
+         ==================================================================== -->
+    <section id="tab-settings" class="tab-pane">
+      <div class="calc-pane active">
+        <div class="calc-card">
+          <h3>⚙️ Параметры лаборатории и смены</h3>
+          <p class="calc-desc">Данные для шапки официальных отчетов и режим работы.</p>
+
+          <div class="form-group">
+            <label for="settingFacility">Наименование предприятия:</label>
+            <input type="text" id="settingFacility" class="form-control">
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="settingTechnician">ФИО дежурного инженера ВХР:</label>
+              <input type="text" id="settingTechnician" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="settingShift">Смена:</label>
+              <select id="settingShift" class="form-control">
+                <option value="1">Смена 1 (08:00 - 20:00, Дневная)</option>
+                <option value="2">Смена 2 (20:00 - 08:00, Ночная)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+            <input type="checkbox" id="settingSound" style="width: 18px; height: 18px;">
+            <label for="settingSound" style="margin: 0; cursor: pointer;">Включить мягкий звуковой сигнал при наступлении срока анализа</label>
+          </div>
+
+          <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="App.saveSettings()">💾 Сохранить</button>
+            <button class="btn btn-outline" onclick="App.toggleTheme()">🌓 Сменить тему</button>
+            <button class="btn btn-danger-outline" onclick="App.resetToDemo()">Сбросить к демо</button>
+          </div>
+
+          <hr style="border-color: var(--border-color); margin: 1.5rem 0;">
+
+          <h3>📦 Резервная копия базы данных</h3>
+          <p class="calc-desc">Экспорт в JSON для переноса на другой компьютер или флешку.</p>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="ExportManager.exportToJson()">⬇️ Экспорт JSON</button>
+            <label class="btn btn-outline" style="cursor: pointer;">
+              ⬆️ Импорт JSON
+              <input type="file" accept=".json" style="display: none;" onchange="ExportManager.importFromJson(this.files[0])">
+            </label>
+          </div>
+        </div>
+
+        <div class="calc-card">
+          <h3>📖 Справочник предельных норм ПТЭ ТЭ</h3>
+          <p class="calc-desc">Нормативные коридоры качества воды для котельного оборудования.</p>
+          <div id="normsReferenceContainer" style="max-height: 550px; overflow-y: auto;"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ====================================================================
+       МОБИЛЬНАЯ НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (BOTTOM NAVIGATION BAR)
+       ==================================================================== -->
+  <nav class="bottom-nav">
+    <button class="bottom-nav-item active" data-tab="journal" onclick="App.switchTab('journal')">
+      <span class="bnav-icon">📋</span>
+      <span>Журнал</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="calculators" onclick="App.switchTab('calculators')">
+      <span class="bnav-icon">🧮</span>
+      <span>Расчеты</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="reminders" onclick="App.switchTab('reminders')">
+      <span class="bnav-icon">⏰</span>
+      <span>Регламент</span>
+      <span id="bottomNavReminderBadge" class="bottom-nav-badge" style="display: none;">0</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="analytics" onclick="App.switchTab('analytics')">
+      <span class="bnav-icon">📈</span>
+      <span>Тренды</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="settings" onclick="App.switchTab('settings')">
+      <span class="bnav-icon">⚙️</span>
+      <span>Настройки</span>
+    </button>
+  </nav>
+
+
+  <!-- ====================================================================
+       МОДАЛЬНОЕ ОКНО: ВВОД / РЕДАКТИРОВАНИЕ ЗАМЕРА ВХР
+       ==================================================================== -->
+  <div id="recordModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="recordModalTitle">Новый замер ВХР</h3>
+        <button class="btn-icon" onclick="Journal.closeRecordModal()">✖️</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="modalPointSelect">Точка контроля (отбора пробы):</label>
+            <select id="modalPointSelect" class="form-control">
+              <option value="feed">⚡ Питательная вода (деаэратор)</option>
+              <option value="boiler">🔥 Котловая вода</option>
+              <option value="soft">🧪 Вода ХВО (умягченная)</option>
+              <option value="raw">💧 Исходная (сырая) вода</option>
+              <option value="network">🔄 Сетевая вода</option>
+              <option value="condensate">🌫️ Конденсат</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="recEquipment">Конкретный агрегат / линия:</label>
+            <select id="recEquipment" class="form-control"></select>
+          </div>
+
+          <div class="form-group">
+            <label for="recDate">Дата пробы:</label>
+            <input type="date" id="recDate" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="recTime">Время отбора:</label>
+            <input type="time" id="recTime" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="recShift">Смена:</label>
+            <select id="recShift" class="form-control">
+              <option value="1">Смена 1 (день)</option>
+              <option value="2">Смена 2 (ночь)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="recTechnician">Лаборант (ФИО):</label>
+            <input type="text" id="recTechnician" class="form-control" placeholder="Иванова Е.В.">
+          </div>
+        </div>
+
+        <h4 style="color: var(--color-primary); font-size: 0.95rem; margin: 1.25rem 0 0.75rem 0; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+          Лабораторные показатели (с автоматической проверкой норм):
+        </h4>
+
+        <div id="dynamicParamInputs" class="form-grid"></div>
+
+        <div class="form-group" style="margin-top: 1rem;">
+          <label for="recNotes">Замечания лаборанта, режим котла или принятые меры:</label>
+          <textarea id="recNotes" class="form-control" rows="2" placeholder="Например: Деаэратор на продувке, давление пара в норме..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="Journal.closeRecordModal()">Отмена</button>
+        <button class="btn btn-primary" onclick="Journal.saveRecordFromModal()">💾 Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ====================================================================
+       МОДАЛЬНОЕ ОКНО: ДОБАВЛЕНИЕ НАПОМИНАЛКИ
+       ==================================================================== -->
+  <div id="newReminderModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3>Новая регламентная задача</h3>
+        <button class="btn-icon" onclick="App.closeNewReminderModal()">✖️</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="newRemTitle">Название задачи / анализа:</label>
+          <input type="text" id="newRemTitle" class="form-control" placeholder="Например: Замер жесткости фильтра №3">
+        </div>
+        <div class="form-group">
+          <label for="newRemPoint">Связанная точка отбора:</label>
+          <select id="newRemPoint" class="form-control">
+            <option value="feed">⚡ Питательная вода</option>
+            <option value="boiler">🔥 Котловая вода</option>
+            <option value="soft">🧪 Вода ХВО</option>
+            <option value="raw">💧 Исходная вода</option>
+            <option value="network">🔄 Сетевая вода</option>
+            <option value="condensate">🌫️ Конденсат</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="newRemInterval">Периодичность повторения:</label>
+          <select id="newRemInterval" class="form-control">
+            <option value="60">Каждый 1 час</option>
+            <option value="120" selected>Каждые 2 часа</option>
+            <option value="240">Каждые 4 часа</option>
+            <option value="360">Каждые 6 часов</option>
+            <option value="720">Каждые 12 часов (раз в смену)</option>
+            <option value="1440">Каждые 24 часа (раз в сутки)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="newRemNotes">Примечание / регламент:</label>
+          <input type="text" id="newRemNotes" class="form-control" placeholder="Например: Брать пробу из среднего штуцера">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="App.closeNewReminderModal()">Отмена</button>
+        <button class="btn btn-primary" onclick="App.saveNewReminder()">Добавить задачу</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ====================================================================
+       ОБЛАСТЬ ПЕЧАТИ ОФИЦИАЛЬНОЙ СУТОЧНОЙ ВЕДОМОСТИ ВХР (А4 Альбомная)
+       ==================================================================== -->
+  <div id="printableReportArea"></div>
+
+
+  <!-- СКРИПТЫ ПРИЛОЖЕНИЯ (100% ОФФЛАЙН) -->
+  <script src="js/xlsx.full.min.js"></script>
+  <script src="js/chart.umd.min.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/calculators.js"></script>
+  <script src="js/reminders.js"></script>
+  <script src="js/journal.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
