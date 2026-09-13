@@ -27,7 +27,7 @@ const App = {
 
     const metaTheme = document.querySelector('meta[name="theme-color"]');
     if (metaTheme) {
-      metaTheme.setAttribute('content', theme === 'dark' ? '#0f172a' : '#0078d4');
+      metaTheme.setAttribute('content', theme === 'dark' ? '#1b1a19' : '#0078d4');
     }
 
     if (window.Analytics && typeof window.Analytics.render === 'function') {

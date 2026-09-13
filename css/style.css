@@ -50,42 +50,43 @@
 }
 
 /* --------------------------------------------------------------------
-   DARK THEME (Deep Slate / Midnight Navy)
+   DARK THEME: Классический серый фон Office Dark / Excel Dark
    -------------------------------------------------------------------- */
 [data-theme="dark"] {
-  --primary: #38bdf8;
-  --primary-hover: #0ea5e9;
-  --primary-active: #0284c7;
-  --primary-light: rgba(56, 189, 248, 0.12);
-  --primary-subtle: rgba(56, 189, 248, 0.2);
-  --primary-border: rgba(56, 189, 248, 0.35);
+  --primary: #2886de;
+  --primary-hover: #4097e3;
+  --primary-active: #1970bf;
+  --primary-light: rgba(40, 134, 222, 0.15);
+  --primary-subtle: rgba(40, 134, 222, 0.22);
+  --primary-border: rgba(40, 134, 222, 0.4);
 
-  --status-normal: #34d399;
+  --status-normal: #10b981;
   --status-normal-bg: rgba(16, 185, 129, 0.16);
-  --status-warn: #fbbf24;
+  --status-warn: #f59e0b;
   --status-warn-bg: rgba(245, 158, 11, 0.16);
   --status-alarm: #f87171;
   --status-alarm-bg: rgba(239, 68, 68, 0.18);
 
-  --bg-app: #0f172a;
-  --bg-card: #1e293b;
-  --bg-card-hover: #273549;
-  --bg-input: #151e2e;
-  --border-main: #334155;
-  --border-focus: #38bdf8;
+  /* Фирменная серая палитра Office Dark (Excel charcoal) */
+  --bg-app: #1b1a19;
+  --bg-card: #252423;
+  --bg-card-hover: #2f2e2d;
+  --bg-input: #201f1e;
+  --border-main: #3b3a39;
+  --border-focus: #2886de;
 
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-inverse: #0f172a;
+  --text-main: #f3f2f1;
+  --text-muted: #a19f9d;
+  --text-inverse: #1b1a19;
 
-  --table-header-bg: #162032;
-  --table-row-hover: #243144;
-  --table-row-stripe: #1b2536;
-  --table-border: #334155;
+  --table-header-bg: #201f1e;
+  --table-row-hover: #2d2c2b;
+  --table-row-stripe: #222120;
+  --table-border: #3b3a39;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
 }
 
 /* --------------------------------------------------------------------

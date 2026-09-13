@@ -13,13 +13,13 @@ const Analytics = {
   getChartColors() {
     const isDark = (document.documentElement.getAttribute('data-theme') === 'dark');
     return {
-      text: isDark ? '#94a3b8' : '#64748b',
+      text: isDark ? '#a19f9d' : '#64748b',
       grid: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)',
-      primary: isDark ? '#38bdf8' : '#0078d4',
-      primaryBg: isDark ? 'rgba(56, 189, 248, 0.15)' : 'rgba(0, 120, 212, 0.12)',
+      primary: isDark ? '#2886de' : '#0078d4',
+      primaryBg: isDark ? 'rgba(40, 134, 222, 0.18)' : 'rgba(0, 120, 212, 0.12)',
       warning: '#f59e0b',
       warningBg: 'rgba(245, 158, 11, 0.15)',
-      alarm: '#ef4444',
+      alarm: '#f87171',
       alarmBg: 'rgba(239, 68, 68, 0.15)',
       emerald: '#10b981',
       emeraldBg: 'rgba(16, 185, 129, 0.15)'
@@ -48,7 +48,6 @@ const Analytics = {
     const colors = this.getChartColors();
     const sorted = [...AppState.records].sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
     
-    // Питательная и котловая вода
     const feedPoints = sorted.filter(r => r.pointId === 'feed' && r.values && r.values.ph !== undefined);
     const boilerPoints = sorted.filter(r => r.pointId === 'boiler' && r.values && r.values.ph !== undefined);
 
@@ -228,7 +227,7 @@ const Analytics = {
             data: (normal + warn + alarm > 0) ? [normal, warn, alarm] : [1, 0, 0],
             backgroundColor: [colors.emerald, colors.warning, colors.alarm],
             borderWidth: 2,
-            borderColor: (document.documentElement.getAttribute('data-theme') === 'dark') ? '#1e293b' : '#ffffff'
+            borderColor: (document.documentElement.getAttribute('data-theme') === 'dark') ? '#252423' : '#ffffff'
           }
         ]
       },
