@@ -1537,111 +1537,118 @@ textarea.form-input {
 }
 
 /* ====================================================================
-   💻 LAPTOP & MEDIUM SCREEN RESPONSIVENESS (@media <= 1400px)
+   💻 LAPTOP & MEDIUM SCREEN RESPONSIVENESS (@media <= 1440px)
    ==================================================================== */
-@media (max-width: 1400px) {
+@media (max-width: 1440px) {
   .header-container {
-    gap: 0.75rem;
-    padding: 0 1rem;
+    gap: 0.6rem;
+    padding: 0 0.85rem;
   }
 
   .header-brand {
     min-width: auto;
-    gap: 0.6rem;
+    gap: 0.5rem;
   }
 
   .brand-badge {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    font-size: 1.15rem;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    font-size: 1.1rem;
   }
 
   .brand-title {
-    font-size: 1rem;
+    font-size: 0.96rem;
   }
 
   .brand-subtitle {
-    font-size: 0.7rem;
+    display: none !important; /* На ноутбуках скрываем длинный подзаголовок предприятия */
   }
 
   .nav-tabs {
-    gap: 0.25rem;
-    padding: 0.25rem 0.35rem;
+    gap: 0.2rem;
+    padding: 0.2rem 0.35rem;
   }
 
   .nav-tab-btn {
-    padding: 0.35rem 0.65rem;
-    font-size: 0.82rem;
-    gap: 0.35rem;
+    padding: 0.32rem 0.55rem;
+    font-size: 0.8rem;
+    gap: 0.28rem;
   }
 
   .header-actions {
-    gap: 0.45rem;
+    gap: 0.35rem;
   }
 
   .btn-text-hide-sm {
     display: none !important;
   }
 
-  .header-actions .btn-sm {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.88rem;
+  .header-actions .btn {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .header-user-block {
-    padding: 0.3rem 0.6rem;
-    gap: 0.5rem;
-    margin-left: 0.25rem;
+    padding: 0.25rem 0.6rem;
+    gap: 0.45rem;
+    margin-left: 0.2rem;
     cursor: pointer;
+    background: rgba(14, 165, 233, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 20px;
+    transition: all 0.2s ease;
+  }
+
+  .header-user-block:hover {
+    background: rgba(14, 165, 233, 0.22);
+    border-color: rgba(56, 189, 248, 0.6);
   }
 
   .user-role-subtitle {
-    display: none;
+    display: none !important;
+  }
+
+  .user-actions-btns {
+    display: none !important; /* Клик по самому блоку профиля открывает окно смены! */
   }
 
   .user-name-title {
-    font-size: 0.85rem;
-  }
-
-  .user-avatar-badge {
-    width: 28px;
-    height: 28px;
-    font-size: 1rem;
-  }
-
-  .user-actions-btns .btn-xs {
-    padding: 0.2rem 0.45rem;
-    font-size: 0.75rem;
-  }
-}
-
-@media (max-width: 1200px) {
-  .header-container {
-    gap: 0.5rem;
-    padding: 0 0.75rem;
-  }
-
-  .brand-subtitle {
-    display: none;
-  }
-
-  .nav-tab-btn {
-    padding: 0.3rem 0.5rem;
-    font-size: 0.78rem;
-    gap: 0.25rem;
-  }
-
-  .header-user-block {
-    padding: 0.25rem 0.45rem;
-    gap: 0.35rem;
-  }
-
-  .user-name-title {
-    max-width: 110px;
+    font-size: 0.82rem;
+    max-width: 105px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: inline-block;
+  }
+
+  .user-avatar-badge {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 1150px) {
+  .header-container {
+    gap: 0.4rem;
+    padding: 0 0.5rem;
+  }
+
+  .nav-tab-btn {
+    padding: 0.28rem 0.45rem;
+    font-size: 0.76rem;
+    gap: 0.2rem;
+  }
+
+  .user-name-title {
+    max-width: 85px;
   }
 }
 
