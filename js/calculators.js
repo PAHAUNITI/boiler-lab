@@ -183,5 +183,62 @@ const Calculators = {
       tdsMgL: (cond * k).toFixed(1),
       salinityPpm: (cond * k).toFixed(1)
     };
+  },
+
+  // ---------------------------------------------------------------------------
+  // Методы обратной совместимости с App.bindCalculators (app.js)
+  // ---------------------------------------------------------------------------
+  continuousBlowdown(feedTds, boilerTds, steamCapacity) {
+    const raw = this.calculateBlowdown(feedTds, boilerTds, steamCapacity);
+    if (raw.error) return raw;
+    const sBoiler = parseFloat(boilerTds);
+    const flowTh = parseFloat(raw.flowRate) || 0;
+    const lPerMin = (flowTh * 1000 / 60).toFixed(1);
+    // Суточный сброс солей: расход (т/ч) * 1000 кг/т * (sBoiler мг/л / 1000000) * 24 ч
+    const dailySalt = ((flowTh * sBoiler * 24) / 1000).toFixed(2);
+    return {
+      blowdownPercent: raw.percent,
+      blowdownRate: raw.flowRate,
+      blowdownLitersPerMin: lPerMin,
+      dailySaltBlowdownKg: dailySalt,
+      advice: raw.advice,
+      status: raw.status
+    };
+  },
+
+  filterRun(resinVolume, resinCapacity, rawHardness, flowRate, saltSpecificRate = 140) {
+    const raw = this.calculateFilterCycle(resinVolume, resinCapacity, rawHardness, flowRate, saltSpecificRate);
+    if (raw.error) return raw;
+    return {
+      filterCycleM3: raw.waterVolume,
+      durationHours: raw.cycleHours,
+      durationDays: raw.cycleDays,
+      saltKg: raw.saltKg,
+      saltBags25kg: Math.ceil(raw.saltKg / 25),
+      brineVolumeM3: raw.brineVolumeM3,
+      brineLiters: raw.brineLiters
+    };
+  },
+
+  sulfiteDosing(waterFlowM3h, dissolvedO2MkgL) {
+    const raw = this.calculateOxygenScavenger(waterFlowM3h, dissolvedO2MkgL);
+    if (raw.error) return { hourlyGrams: '0.0', dailyKg: '0.00' };
+    return {
+      hourlyGrams: raw.gramPerHour,
+      dailyKg: raw.dailyKg,
+      o2GramPerHour: raw.o2GramPerHour,
+      reaction: raw.reaction
+    };
+  },
+
+  phosphateDosing(steamCapacityTh, feedHardnessMkg) {
+    const raw = this.calculatePhosphateDosing(steamCapacityTh, feedHardnessMkg);
+    if (raw.error) return { hourlyGrams: '0.0', dailyKg: '0.00' };
+    return {
+      hourlyGrams: raw.gramPerHour,
+      dailyKg: raw.dailyKg,
+      po4GramPerHour: raw.po4GramPerHour,
+      reaction: raw.reaction
+    };
   }
 };

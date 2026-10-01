@@ -94,9 +94,9 @@ const SAMPLE_POINTS = {
 // Единый глобальный объект состояния
 const AppState = {
   settings: {
-    facilityName: 'Районная отопительная котельная №4',
+    facilityName: '«Теплогенерирующая компания 1» (ООО «ТГК 1»)',
     boilerList: ['Котел №1 (ДКВР-10/13)', 'Котел №2 (ДКВР-10/13)', 'Котел №3 (КВ-ГМ-20)', 'Деаэратор ДА-15'],
-    currentTechnician: 'Смирнова А.В.',
+    currentTechnician: 'Коновалов П.С.',
     currentShift: 1, // 1 (08:00 - 20:00) или 2 (20:00 - 08:00)
     soundEnabled: true,
     notificationsEnabled: false,
@@ -268,6 +268,12 @@ const AppState = {
     this.loadDemoRecords();
     this.save();
     return false;
+  },
+
+  // Получение демонстрационных данных
+  getDemoRecords() {
+    this.loadDemoRecords();
+    return this.records;
   },
 
   // Генерация демонстрационных данных за последние смены

@@ -73,6 +73,8 @@ const App = {
       setTimeout(() => window.Analytics.render(), 50);
     } else if (tabId === 'settings') {
       this.initSettingsPage();
+    } else if (tabId === 'admin' && window.Admin) {
+      window.Admin.init();
     }
   },
 
@@ -307,7 +309,7 @@ const App = {
   },
 
   saveSettings() {
-    AppState.settings.facilityName = document.getElementById('settingFacility')?.value.trim() || 'Котельная №1';
+    AppState.settings.facilityName = document.getElementById('settingFacility')?.value.trim() || '«Теплогенерирующая компания 1» (ООО «ТГК 1»)';
     AppState.settings.technicianName = document.getElementById('settingTechnician')?.value.trim() || '';
     AppState.settings.defaultShift = document.getElementById('settingShift')?.value || '1';
     AppState.settings.soundAlerts = document.getElementById('settingSound')?.checked ?? true;
@@ -358,7 +360,7 @@ const App = {
   checkUrlTab() {
     try {
       const hash = window.location.hash.replace('#', '');
-      if (['journal', 'calculators', 'reminders', 'analytics', 'settings'].includes(hash)) {
+      if (['journal', 'calculators', 'reminders', 'analytics', 'settings', 'admin'].includes(hash)) {
         this.switchTab(hash);
       }
     } catch (e) {
@@ -370,6 +372,8 @@ const App = {
     AppState.load();
     this.initTheme();
 
+    if (window.Auth) window.Auth.init();
+    if (window.Admin) window.Admin.init();
     if (window.Journal) window.Journal.init();
     if (window.Reminders) window.Reminders.init();
     this.bindCalculators();

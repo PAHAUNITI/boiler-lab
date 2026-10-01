@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="light">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>ВХР Лаборатория — Контроль водно-химического режима</title>
+  <title>АИС «ТеплоХимЛаб» — «Теплогенерирующая компания 1» (ООО «ТГК 1»)</title>
   
   <!-- Мобильная интеграция (PWA / iOS / Android) -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="ВХР Лаб">
+  <meta name="apple-mobile-web-app-title" content="ТеплоХимЛаб">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#0078d4">
   <link rel="manifest" href="manifest.json">
@@ -28,7 +28,7 @@
         <div class="brand-badge">💧</div>
         <div class="brand-text">
           <h1 class="brand-title">ВХР Лаборатория</h1>
-          <span class="brand-subtitle">Котельная и ХВО</span>
+          <span class="brand-subtitle">«Теплогенерирующая компания 1» · ООО «ТГК 1»</span>
         </div>
       </div>
 
@@ -51,23 +51,49 @@
           <span class="tab-icon">📈</span>
           <span>Графики</span>
         </button>
+        <button class="nav-tab-btn" data-tab="admin" onclick="App.switchTab('admin')">
+          <span class="tab-icon">🛡️</span>
+          <span>Аудит и доступ</span>
+        </button>
         <button class="nav-tab-btn" data-tab="settings" onclick="App.switchTab('settings')">
           <span class="tab-icon">⚙️</span>
           <span>Опции и нормы</span>
         </button>
       </nav>
 
-      <!-- Быстрые действия -->
+      <!-- Профиль текущего пользователя и быстрые действия -->
       <div class="header-actions">
-        <button class="btn btn-primary btn-sm" onclick="Journal.openNewRecordModal()">
+        <!-- Информер лаборатории ВХР: регламент отбора проб -->
+        <div class="header-weather-kpi" id="headerWeatherKpi" title="Лабораторный регламент отбора проб ВХР">
+          <div class="weather-metric-item"><span>🧪</span> <span class="weather-metric-val">ВХР: Контроль</span></div>
+          <div class="weather-metric-item"><span>⏱️</span> <span class="weather-metric-val" id="weatherNextSample">через 45 мин</span></div>
+        </div>
+
+        <button class="btn btn-primary btn-sm btn-add-record" onclick="Journal.openNewRecordModal()" title="Внести анализ воды (Хоткей: N)">
           <span>➕</span> <span class="btn-text-hide-sm">Внести замер</span>
         </button>
         <button class="btn btn-outline btn-sm" onclick="ExportManager.exportToExcel()" title="Экспорт в Excel (.xlsx)">
           <span>📊</span> <span class="btn-text-hide-sm">Excel</span>
         </button>
+        <button class="btn btn-icon" onclick="SoundFx.toggleMute()" id="soundToggleBtn" title="Звуковые эффекты (вкл/выкл)">
+          <span id="soundToggleIcon">🔔</span>
+        </button>
         <button class="btn btn-icon" onclick="App.toggleTheme()" id="themeToggleBtn" title="Переключить тему (День / Ночь)">
           <span id="themeToggleIcon">🌙</span>
         </button>
+
+        <!-- Блок пользователя -->
+        <div class="header-user-block">
+          <div class="user-avatar-badge" id="headerUserBadge" title="Профиль">🧪</div>
+          <div class="user-info-text">
+            <span class="user-name-title" id="headerUserName">Коновалов П.С.</span>
+            <span class="user-role-subtitle" id="headerUserRole">Инженер-химик (лаборант)</span>
+          </div>
+          <div class="user-actions-btns">
+            <button class="btn btn-xs btn-outline-warning" onclick="ShiftGate.openHandoverModal()" title="Передать смену следующему дежурному">🔄 Сдать смену</button>
+            <button class="btn btn-xs btn-outline" onclick="Auth.showChangePassModal()" title="Сменить свой пароль">🔑</button>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -522,6 +548,78 @@
       </div>
     </section>
 
+    <!-- ВКЛАДКА 5: БЕЗОПАСНОСТЬ, АУДИТ И ПОЛЬЗОВАТЕЛИ (ADMIN) -->
+    <section id="tab-admin" class="tab-pane">
+      <div class="header-banner-card">
+        <div>
+          <h2 class="section-title">🛡️ Журнал аудита и разграничение прав доступа</h2>
+          <p class="section-desc">Управление пользователями, аудит действий персонала и контроль безопасности водно-химического режима.</p>
+        </div>
+        <div class="banner-actions">
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('modalAddUser').classList.add('active')">➕ Новый пользователь</button>
+          <button class="btn btn-outline btn-sm" onclick="ExportManager.exportToJson()">💾 Резервная копия базы</button>
+        </div>
+      </div>
+
+      <!-- Сводка пользователей -->
+      <div class="card" style="margin-bottom: 1.25rem;">
+        <div class="card-header-flex">
+          <div>
+            <h3 class="card-title">👥 Учетные записи и роли пользователей (RBAC)</h3>
+            <p class="card-desc">Ролевая модель доступа: Инженер-химик (ввод/расчеты), Начальник смены (просмотр/отчеты), Администратор (полный доступ).</p>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>№</th>
+                <th>Логин</th>
+                <th>ФИО сотрудника</th>
+                <th>Роль в системе</th>
+                <th>Статус</th>
+                <th class="text-right">Действия</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Журнал действий (Audit Log) -->
+      <div class="card">
+        <div class="card-header-flex">
+          <div>
+            <h3 class="card-title">📜 Системный журнал аудита действий персонала</h3>
+            <p class="card-desc">Фиксация всех значимых событий: авторизация, внесение химических анализов, расчеты, выгрузка рапортов и смена параметров.</p>
+          </div>
+          <div class="filter-actions-group">
+            <select id="auditFilterAction" class="form-select" style="min-width: 170px;" onchange="Admin.renderAuditTable()">
+              <option value="all">Все действия</option>
+              <option value="Вход">Вход в систему</option>
+              <option value="Внесение замера">Внесение замера</option>
+              <option value="Смена пароля">Смена пароля</option>
+              <option value="Резервное">Резервное копирование</option>
+            </select>
+            <input type="text" id="auditSearchInput" class="form-input" placeholder="Поиск по журналу..." oninput="Admin.renderAuditTable()">
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 130px;">Время события</th>
+                <th style="width: 200px;">Пользователь</th>
+                <th style="width: 180px;">Действие</th>
+                <th>Подробности и параметры</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- МОБИЛЬНАЯ НАВИГАЦИЯ -->
@@ -553,7 +651,12 @@
   <div id="recordModal" class="modal-overlay">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 class="modal-title" id="recordModalTitle">Внесение замера ВХР</h3>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <h3 class="modal-title" id="recordModalTitle">Внесение замера ВХР</h3>
+          <button type="button" class="btn-preset" onclick="Journal.fillDefaultNormsPreset()" title="Заполнить поля типовой нормой ПТЭ ТЭ в 1 клик">
+            ✨ Типовая норма (1 клик)
+          </button>
+        </div>
         <button class="btn-icon" onclick="Journal.closeRecordModal()">✕</button>
       </div>
 
@@ -694,14 +797,324 @@
 
   <div id="printableReportArea"></div>
 
+  <!-- МОДАЛЬНОЕ ОКНО: АВТОРИЗАЦИЯ И РЕГИСТРАЦИЯ СПЕЦИАЛИСТА (ENTERPRISE) -->
+  <div id="modalLogin" class="modal-overlay">
+    <div class="modal-card" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🔐 Доступ к системе «ТеплоХимЛаб»</h3>
+        <button class="btn-icon" onclick="Auth.closeLoginModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <!-- Переключатель режима: Вход / Регистрация -->
+        <div class="auth-mode-tabs">
+          <button type="button" class="auth-mode-tab active" id="tabAuthLogin" onclick="Auth.setAuthMode('login')">
+            🔑 Вход в систему
+          </button>
+          <button type="button" class="auth-mode-tab" id="tabAuthRegister" onclick="Auth.setAuthMode('register')">
+            ✨ Регистрация специалиста
+          </button>
+        </div>
+
+        <!-- Сообщение об ошибке -->
+        <div id="loginErrorMsg" style="color: var(--status-alarm); font-size: 0.85rem; margin-bottom: 0.75rem; display: none; background: rgba(239, 68, 68, 0.12); padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.3);"></div>
+
+        <!-- ФОРМА 1: ВХОД -->
+        <div id="authFormLogin">
+          <div class="form-group">
+            <label class="form-label" for="loginUsername">Логин специалиста:</label>
+            <input type="text" id="loginUsername" class="form-input" placeholder="например: lab, operator, admin" value="lab">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Пароль доступа:</label>
+            <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" value="lab123">
+          </div>
+
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border-main);">
+            <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Быстрый выбор для демонстрации:</span>
+            <div class="quick-login-grid" style="margin-top: 0.5rem;">
+              <div class="quick-login-btn" onclick="Auth.quickSelectUser('lab', 'lab123')">
+                <span class="quick-login-icon">🧪</span>
+                <span class="quick-login-title">Лаборант ВХР</span>
+                <span class="quick-login-desc">Коновалов П.С.</span>
+              </div>
+              <div class="quick-login-btn" onclick="Auth.quickSelectUser('operator', 'op123')">
+                <span class="quick-login-icon">⚡</span>
+                <span class="quick-login-title">Оператор смены</span>
+                <span class="quick-login-desc">Смирнова А.В.</span>
+              </div>
+              <div class="quick-login-btn" onclick="Auth.quickSelectUser('admin', 'admin123')">
+                <span class="quick-login-icon">👑</span>
+                <span class="quick-login-title">Администратор</span>
+                <span class="quick-login-desc">Системный админ</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.25rem; display: flex; justify-content: flex-end; gap: 0.5rem;">
+            <button type="button" class="btn btn-outline" onclick="Auth.closeLoginModal()">Отмена</button>
+            <button type="button" class="btn btn-primary" onclick="Auth.submitLogin()">Войти в систему</button>
+          </div>
+        </div>
+
+        <!-- ФОРМА 2: РЕГИСТРАЦИЯ НОВОГО СПЕЦИАЛИСТА -->
+        <div id="authFormRegister" style="display: none;">
+          <div class="form-group">
+            <label class="form-label" for="regFullName">ФИО специалиста (полностью):</label>
+            <input type="text" id="regFullName" class="form-input" placeholder="например: Соколов Артем Владимирович">
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="regUsername">Желаемый логин:</label>
+              <input type="text" id="regUsername" class="form-input" placeholder="например: sokolov">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="regPassword">Пароль доступа:</label>
+              <input type="password" id="regPassword" class="form-input" placeholder="не менее 4 символов">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regRole">Должность / Квалификационная роль:</label>
+            <select id="regRole" class="form-select">
+              <option value="LAB">🧪 Инженер-химик (лаборант ВХР) — полный доступ к журналу</option>
+              <option value="OPERATOR">⚡ Начальник смены котельной — оперативный мониторинг</option>
+              <option value="TECHNOLOGIST">⚙️ Главный технолог / инженер ПТО — режимные карты</option>
+              <option value="ADMIN">🛡️ Администратор системы — аудит и права доступа</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regDepartment">Производственное подразделение / цех:</label>
+            <select id="regDepartment" class="form-select">
+              <option value="«Теплогенерирующая компания 1» (ООО «ТГК 1»)">«Теплогенерирующая компания 1» (ООО «ТГК 1»)</option>
+              <option value="Водоподготовительная установка (ХВО)">Водоподготовительная установка (ХВО)</option>
+              <option value="Паросиловой контур и котлы ДКВр/ДЕ">Паросиловой контур и котлы ДКВр/ДЕ</option>
+              <option value="Магистральные тепловые сети">Магистральные тепловые сети</option>
+            </select>
+          </div>
+
+          <div style="margin-top: 1.25rem; display: flex; justify-content: flex-end; gap: 0.5rem;">
+            <button type="button" class="btn btn-outline" onclick="Auth.setAuthMode('login')">Назад к входу</button>
+            <button type="button" class="btn btn-primary" onclick="Auth.submitRegister()">✨ Зарегистрировать и войти</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО: СМЕНА ПАРОЛЯ -->
+  <div id="modalChangePass" class="modal-overlay">
+    <div class="modal-card" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🔑 Смена пароля</h3>
+        <button class="btn-icon" onclick="Auth.closeChangePassModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="oldPassInput">Текущий пароль:</label>
+          <input type="password" id="oldPassInput" class="form-input" placeholder="Введите старый пароль">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="newPassInput">Новый пароль:</label>
+          <input type="password" id="newPassInput" class="form-input" placeholder="Не менее 4 символов">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="Auth.closeChangePassModal()">Отмена</button>
+        <button class="btn btn-primary" onclick="
+          const oldP = document.getElementById('oldPassInput').value;
+          const newP = document.getElementById('newPassInput').value;
+          const res = Auth.changePassword(oldP, newP);
+          if (res.success) {
+            alert('Пароль успешно изменен!');
+            Auth.closeChangePassModal();
+          } else {
+            alert(res.error);
+          }
+        ">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО: ДОБАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ -->
+  <div id="modalAddUser" class="modal-overlay">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title">➕ Добавление пользователя</h3>
+        <button class="btn-icon" onclick="document.getElementById('modalAddUser').classList.remove('active')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="newUserName">ФИО сотрудника:</label>
+          <input type="text" id="newUserName" class="form-input" placeholder="Иванов Иван Иванович">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="newUserLogin">Логин:</label>
+          <input type="text" id="newUserLogin" class="form-input" placeholder="ivanov">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="newUserPass">Пароль:</label>
+          <input type="password" id="newUserPass" class="form-input" placeholder="••••••••">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="newUserRole">Роль в системе:</label>
+          <select id="newUserRole" class="form-select">
+            <option value="LAB">Инженер-химик (лаборант ВХР)</option>
+            <option value="OPERATOR">Начальник смены / оператор</option>
+            <option value="ADMIN">Администратор АИС</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="document.getElementById('modalAddUser').classList.remove('active')">Отмена</button>
+        <button class="btn btn-primary" onclick="
+          const f = document.getElementById('newUserName').value;
+          const l = document.getElementById('newUserLogin').value;
+          const p = document.getElementById('newUserPass').value;
+          const r = document.getElementById('newUserRole').value;
+          Admin.addNewUser(l, f, p, r);
+          document.getElementById('modalAddUser').classList.remove('active');
+        ">Создать</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       СТАРТОВЫЙ ЭКРАН: ЗАСТУПЛЕНИЕ НА СМЕНУ (SHIFT WELCOME GATE)
+       ==================================================================== -->
+  <div id="modalShiftGate" class="modal-overlay">
+    <div class="modal-card shift-gate-modal">
+      <div class="shift-gate-header">
+        <div class="shift-gate-brand">
+          <span>🧪</span> <span>Лаборатория ВХР · «Теплогенерирующая компания 1» (ООО «ТГК 1»)</span>
+        </div>
+        <h2 class="shift-gate-title">Вход на рабочую смену</h2>
+        <p class="shift-greeting-text" id="shiftGreetingText">
+          ☀️ Добро пожаловать! Выберите дежурного специалиста для заступления на смену:
+        </p>
+        <div class="shift-meta-bar">
+          <span id="shiftMetaDate">📅 01 октября 2026, Четверг</span>
+          <span>•</span>
+          <span id="shiftMetaShift">⏱️ Смена №1 (Дневная 08:00–20:00)</span>
+          <span>•</span>
+          <span>🧪 Лаборатория: Готова к смене</span>
+        </div>
+      </div>
+
+      <div class="modal-body" style="padding: 1.25rem 1.75rem;">
+        <div class="shift-users-grid" id="shiftUsersGrid">
+          <!-- Карточка 1: Коновалов П.С. (Лаборант ВХР) -->
+          <div class="shift-user-card featured" onclick="ShiftGate.selectUser('lab', 'lab123')">
+            <span class="shift-card-badge">Смена №1</span>
+            <div class="shift-user-avatar">🧪</div>
+            <div class="shift-user-name">Коновалов Павел С.</div>
+            <div class="shift-user-role">Инженер-химик (лаборант ВХР)</div>
+            <button type="button" class="shift-user-btn">⚡ Заступить на смену</button>
+          </div>
+
+          <!-- Карточка 2: Смирнова А.В. (Начальник смены) -->
+          <div class="shift-user-card" onclick="ShiftGate.selectUser('operator', 'op123')">
+            <span class="shift-card-badge" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">Оператор</span>
+            <div class="shift-user-avatar">⚡</div>
+            <div class="shift-user-name">Смирнова Анна В.</div>
+            <div class="shift-user-role">Начальник смены котельной</div>
+            <button type="button" class="shift-user-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706);">⚡ Начать дежурство</button>
+          </div>
+
+          <!-- Карточка 3: Администратор -->
+          <div class="shift-user-card" onclick="ShiftGate.selectUser('admin', 'admin123')">
+            <span class="shift-card-badge" style="background: rgba(139, 92, 246, 0.15); color: #a855f7;">Доступ</span>
+            <div class="shift-user-avatar">👑</div>
+            <div class="shift-user-name">Администратор</div>
+            <div class="shift-user-role">Системный администратор АИС</div>
+            <button type="button" class="shift-user-btn" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">⚡ Войти в АИС</button>
+          </div>
+
+          <!-- Карточка 4: Регистрация нового специалиста -->
+          <div class="shift-user-card" onclick="ShiftGate.openRegistration()" style="border-style: dashed;">
+            <span class="shift-card-badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">Новый</span>
+            <div class="shift-user-avatar" style="border-color: #10b981;">✨</div>
+            <div class="shift-user-name">Новый сотрудник</div>
+            <div class="shift-user-role">Саморегистрация специалиста</div>
+            <button type="button" class="shift-user-btn" style="background: linear-gradient(135deg, #10b981, #059669);">📝 Зарегистрироваться</button>
+          </div>
+        </div>
+
+        <div class="shift-gate-footer">
+          <div>
+            <span>🔒 Защищенный вход по стандартам АСУ ТП</span>
+          </div>
+          <div>
+            <button type="button" class="btn btn-sm btn-outline" onclick="ShiftGate.openPasswordLogin()" style="font-size: 0.78rem;">
+              🔑 Войти по логину и паролю
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       МОДАЛЬНОЕ ОКНО: ПЕРЕДАЧА СМЕНЫ / СДАЧА СМЕНЫ (SHIFT HANDOVER)
+       ==================================================================== -->
+  <div id="modalShiftHandover" class="modal-overlay">
+    <div class="modal-card" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🔄 Сдача дежурства и смены</h3>
+        <button class="btn-icon" onclick="ShiftGate.closeHandoverModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Сводный рапорт за текущее дежурство перед передачей следующему инженеру:
+        </p>
+        <div style="background: var(--primary-light); padding: 1rem; border-radius: 10px; border: 1px solid var(--primary-border); margin-bottom: 1rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.88rem;">
+            <span>Сдающий специалист:</span>
+            <strong id="handoverUserName">Коновалов П.С.</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.88rem;">
+            <span>Выполнено замеров ВХР:</span>
+            <strong id="handoverRecordsCount">0</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.88rem;">
+            <span>Проб с браком / отклонением:</span>
+            <strong id="handoverAlarmCount" style="color: var(--status-alarm);">0</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.88rem;">
+            <span>Статус оборудования ВХР:</span>
+            <strong style="color: var(--status-normal);">Штатный режим</strong>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="handoverNotes">Замечания и наставления следующей смене:</label>
+          <textarea id="handoverNotes" class="form-input" rows="3" placeholder="Например: Проверить регенерацию Na-фильтра №2 к 22:00, деаэратор держит вакуум..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="ShiftGate.closeHandoverModal()">Отмена</button>
+        <button class="btn btn-primary" onclick="ShiftGate.confirmHandover()">✅ Завершить смену и сдать вахту</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       ПЛАВАЮЩИЙ ИНФОРМЕР ГОРЯЧИХ КЛАВИШ
+       ==================================================================== -->
+  <div class="hotkeys-bar" id="hotkeysBar">
+    <span>⌨️</span>
+    <span><b>Хоткеи:</b> <kbd>N</kbd> замер | <kbd>1..5</kbd> вкладки | <kbd>Esc</kbd> закрыть</span>
+    <button class="hotkeys-bar-close" onclick="Hotkeys.hideBar()" title="Скрыть панель хоткеев">✕</button>
+  </div>
+
   <script src="js/xlsx.full.min.js"></script>
   <script src="js/chart.umd.min.js"></script>
   <script src="js/state.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
   <script src="js/calculators.js"></script>
   <script src="js/reminders.js"></script>
   <script src="js/journal.js"></script>
   <script src="js/analytics.js"></script>
   <script src="js/export.js"></script>
+  <script src="js/ergonomics.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "lab",
+      "fullName": "Коновалов Павел Сергеевич",
+      "role": "LAB",
+      "roleName": "Инженер-химик (лаборант ВХР)",
+      "active": true
+    },
+    {
+      "id": 2,
+      "username": "operator",
+      "fullName": "Смирнова Анна Васильевна",
+      "role": "OPERATOR",
+      "roleName": "Начальник смены котельной",
+      "active": true
+    },
+    {
+      "id": 3,
+      "username": "admin",
+      "fullName": "Администратор системы",
+      "role": "ADMIN",
+      "roleName": "Администратор АИС",
+      "active": true
+    }
+  ],
+  "audit": [],
+  "records": []
+}

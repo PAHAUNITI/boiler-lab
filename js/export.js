@@ -110,7 +110,7 @@ const ExportManager = {
 
       // Сохраняем файл
       const today = new Date().toISOString().slice(0, 10);
-      XLSX.writeFile(wb, `Журнал_ВХР_Котельная_${today}.xlsx`);
+      XLSX.writeFile(wb, `Журнал_ВХР_ТГК1_${today}.xlsx`);
     } catch (e) {
       console.error('Ошибка экспорта в Excel:', e);
       alert('Произошла ошибка при формировании Excel: ' + e.message);

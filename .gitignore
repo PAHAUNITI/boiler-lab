@@ -1,5 +1,57 @@
-# Ignored files
-*.zip
-*.log
+# OS files
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+*.tmp
+*.temp
+err.txt
+
+# Office documents & college report generation scripts
+*.docx
+*.pdf
+*.doc
+*.xlsx
+build_full_report.py
+make_report.py
+sections_*.py
+generate_complete_docx.py
+generate_diagrams*.py
+generate_*.py
+gost_frame_injector.py
+export_final.*
+export_pdf.*
+export_sample.*
+verify_final.py
+check_styles.py
+extract_styles.py
+run_stamp_pipeline.py
+find_*.py
+inspect_*.py
+list_*.py
+print_*.py
+render_*.py
+scratch_*.py
+test_*.py
+diff_*.py
+compare_*.py
+search_*.py
+write_*.py
+*.ps1
+
+# Temporary renders and test images
+*.png
+*.jpeg
+*.jpg
+docs_images/
+!assets/*.png
+
+# Temporary & notes
+*.zip
+*.txt
+task.md

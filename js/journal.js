@@ -176,8 +176,11 @@ const Journal = {
     const pad = n => n.toString().padStart(2, '0');
     document.getElementById('recDate').value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
     document.getElementById('recTime').value = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
-    document.getElementById('recTechnician').value = AppState.settings.currentTechnician || '';
-    document.getElementById('recShift').value = AppState.settings.currentShift || 1;
+    const currentUser = (window.Auth && window.Auth.getCurrentUser()) ? window.Auth.getCurrentUser() : null;
+    // Автоматическое определение текущей дежурной смены по часам котельной
+    const hour = now.getHours();
+    const autoShift = (hour >= 8 && hour < 20) ? 1 : 2;
+    document.getElementById('recShift').value = currentUser && currentUser.shift ? currentUser.shift : autoShift;
     document.getElementById('recNotes').value = '';
 
     const pointSelect = document.getElementById('modalPointSelect');
@@ -191,6 +194,35 @@ const Journal = {
     this.renderDynamicParamInputs(pointSelect.value);
 
     modal.classList.add('active');
+  },
+
+  // Быстрое заполнение типовыми эталонными нормами в 1 клик
+  fillDefaultNormsPreset() {
+    const pointId = document.getElementById('modalPointSelect').value;
+    const presets = {
+      feed: { ph: 9.1, hardness: 3.2, o2: 12.0 },
+      boiler: { ph: 10.4, totalDissolvedSolids: 1850, phosphate: 12.5, alkalinityTotal: 14.0 },
+      soft: { hardness: 4.5, chloride: 22.0 },
+      raw: { hardness: 4200, totalDissolvedSolids: 320 },
+      network: { ph: 9.2, o2: 14.0, hardness: 8.5 },
+      condensate: { ph: 8.8, hardness: 2.1, iron: 15.0 }
+    };
+
+    const data = presets[pointId] || {};
+    Object.entries(data).forEach(([paramKey, val]) => {
+      const input = document.getElementById(`param_${paramKey}`);
+      if (input) {
+        input.value = val;
+        this.onParamLiveInput(pointId, paramKey, input);
+      }
+    });
+
+    if (window.SoundFx) {
+      window.SoundFx.playSuccess();
+    }
+    if (window.ShiftGate) {
+      window.ShiftGate.showToast('✨ Заполнены типовые технологические нормы по ПТЭ ТЭ', 'info');
+    }
   },
 
   openEditModal(recordId) {
@@ -387,11 +419,29 @@ const Journal = {
       if (this.linkedReminderId) {
         Reminders.completeReminder(this.linkedReminderId);
       }
+
+      if (window.Admin && typeof window.Admin.logAction === 'function') {
+        const pointName = point.name || pointId;
+        const statusText = evalResult.status === 'alarm' ? 'НАРУШЕНИЕ' : (evalResult.status === 'warning' ? 'ПРЕДУПРЕЖДЕНИЕ' : 'В НОРМЕ');
+        window.Admin.logAction(
+          'Внесение замера',
+          `Внесен анализ: ${pointName} (${equipment || 'Основная линия'}). Статус: ${statusText}. Лаборант: ${technician}`,
+          evalResult.status === 'alarm' ? 'danger' : (evalResult.status === 'warning' ? 'warning' : 'success')
+        );
+      }
     }
 
     AppState.save();
     this.closeRecordModal();
     this.render();
+
+    if (window.SoundFx) {
+      if (evalResult.status === 'alarm') {
+        window.SoundFx.playAlert();
+      } else {
+        window.SoundFx.playSuccess();
+      }
+    }
 
     if (window.Analytics && window.Analytics.render) {
       window.Analytics.render();
@@ -399,9 +449,15 @@ const Journal = {
   },
 
   deleteRecord(id) {
+    const rec = AppState.records.find(r => r.id === id);
     if (!confirm('Вы действительно хотите удалить эту запись из журнала?')) return;
     AppState.records = AppState.records.filter(r => r.id !== id);
     AppState.save();
+    
+    if (window.Admin && typeof window.Admin.logAction === 'function') {
+      window.Admin.logAction('Удаление анализа', `Удалена запись анализа ID: ${id} (${rec ? rec.pointId : ''})`, 'danger');
+    }
+
     this.render();
     if (window.Analytics && window.Analytics.render) {
       window.Analytics.render();
