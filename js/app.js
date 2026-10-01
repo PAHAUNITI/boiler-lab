@@ -376,6 +376,7 @@ const App = {
     if (window.Admin) window.Admin.init();
     if (window.Journal) window.Journal.init();
     if (window.Reminders) window.Reminders.init();
+    if (window.ShiftGate) window.ShiftGate.init();
     this.bindCalculators();
     this.initSettingsPage();
     this.checkUrlTab();

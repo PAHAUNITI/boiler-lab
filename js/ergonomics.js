@@ -131,11 +131,8 @@ const ShiftGate = {
 
   init() {
     this.updateGreetingAndMeta();
-    // Проверяем: заступил ли пользователь на смену
-    const isActive = sessionStorage.getItem(this.SESSION_ACTIVE_FLAG);
-    if (!isActive) {
-      this.openShiftGate();
-    }
+    // Показываем стартовый экран заступления на смену при запуске приложения (1 клик для входа)
+    this.openShiftGate();
   },
 
   updateGreetingAndMeta() {

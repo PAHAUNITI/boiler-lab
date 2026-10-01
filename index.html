@@ -83,15 +83,15 @@
         </button>
 
         <!-- Блок пользователя -->
-        <div class="header-user-block">
+        <div class="header-user-block" onclick="ShiftGate.openShiftGate()" title="Быстрый выбор специалиста / заступление на смену (1 клик)">
           <div class="user-avatar-badge" id="headerUserBadge" title="Профиль">🧪</div>
           <div class="user-info-text">
             <span class="user-name-title" id="headerUserName">Коновалов П.С.</span>
             <span class="user-role-subtitle" id="headerUserRole">Инженер-химик (лаборант)</span>
           </div>
           <div class="user-actions-btns">
-            <button class="btn btn-xs btn-outline-warning" onclick="ShiftGate.openHandoverModal()" title="Передать смену следующему дежурному">🔄 Сдать смену</button>
-            <button class="btn btn-xs btn-outline" onclick="Auth.showChangePassModal()" title="Сменить свой пароль">🔑</button>
+            <button class="btn btn-xs btn-outline-warning" onclick="event.stopPropagation(); ShiftGate.openShiftGate();" title="Сменить дежурного специалиста / сдать смену">🔄 Смена</button>
+            <button class="btn btn-xs btn-outline" onclick="event.stopPropagation(); Auth.showChangePassModal();" title="Сменить пароль">🔑</button>
           </div>
         </div>
       </div>
@@ -982,7 +982,8 @@
        ==================================================================== -->
   <div id="modalShiftGate" class="modal-overlay">
     <div class="modal-card shift-gate-modal">
-      <div class="shift-gate-header">
+      <div class="shift-gate-header" style="position: relative;">
+        <button type="button" class="btn-icon" onclick="ShiftGate.closeShiftGate()" title="Закрыть" style="position: absolute; top: 1rem; right: 1.25rem; font-size: 1.1rem; width: 34px; height: 34px; border-radius: 8px;">✕</button>
         <div class="shift-gate-brand">
           <span>🧪</span> <span>Лаборатория ВХР · «Теплогенерирующая компания 1» (ООО «ТГК 1»)</span>
         </div>

@@ -1537,6 +1537,115 @@ textarea.form-input {
 }
 
 /* ====================================================================
+   💻 LAPTOP & MEDIUM SCREEN RESPONSIVENESS (@media <= 1400px)
+   ==================================================================== */
+@media (max-width: 1400px) {
+  .header-container {
+    gap: 0.75rem;
+    padding: 0 1rem;
+  }
+
+  .header-brand {
+    min-width: auto;
+    gap: 0.6rem;
+  }
+
+  .brand-badge {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    font-size: 1.15rem;
+  }
+
+  .brand-title {
+    font-size: 1rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.7rem;
+  }
+
+  .nav-tabs {
+    gap: 0.25rem;
+    padding: 0.25rem 0.35rem;
+  }
+
+  .nav-tab-btn {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.82rem;
+    gap: 0.35rem;
+  }
+
+  .header-actions {
+    gap: 0.45rem;
+  }
+
+  .btn-text-hide-sm {
+    display: none !important;
+  }
+
+  .header-actions .btn-sm {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.88rem;
+  }
+
+  .header-user-block {
+    padding: 0.3rem 0.6rem;
+    gap: 0.5rem;
+    margin-left: 0.25rem;
+    cursor: pointer;
+  }
+
+  .user-role-subtitle {
+    display: none;
+  }
+
+  .user-name-title {
+    font-size: 0.85rem;
+  }
+
+  .user-avatar-badge {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+  }
+
+  .user-actions-btns .btn-xs {
+    padding: 0.2rem 0.45rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .header-container {
+    gap: 0.5rem;
+    padding: 0 0.75rem;
+  }
+
+  .brand-subtitle {
+    display: none;
+  }
+
+  .nav-tab-btn {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.78rem;
+    gap: 0.25rem;
+  }
+
+  .header-user-block {
+    padding: 0.25rem 0.45rem;
+    gap: 0.35rem;
+  }
+
+  .user-name-title {
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* ====================================================================
    📱 MOBILE RESPONSIVENESS & CARD TRANSFORMATION (@media <= 768px)
    ==================================================================== */
 @media (max-width: 768px) {
@@ -2091,7 +2200,7 @@ textarea.form-input {
   color: var(--text-muted);
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1550px) {
   .header-weather-kpi {
     display: flex;
   }
